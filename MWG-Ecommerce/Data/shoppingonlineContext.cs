@@ -7,13 +7,13 @@ using MWG_Ecommerce.Models;
 
 namespace MWG_Ecommerce.Data
 {
-    public partial class shoppingonlineContext : DbContext
+    public partial class ShoppingonlineContext : DbContext
     {
-        public shoppingonlineContext()
+        public ShoppingonlineContext()
         {
         }
 
-        public shoppingonlineContext(DbContextOptions<shoppingonlineContext> options)
+        public ShoppingonlineContext(DbContextOptions<ShoppingonlineContext> options)
             : base(options)
         {
         }
@@ -159,6 +159,8 @@ namespace MWG_Ecommerce.Data
                 entity.Property(e => e.Email).IsFixedLength(true);
 
                 entity.Property(e => e.Phone).IsFixedLength(true);
+
+                entity.Property(e => e.Picture).IsUnicode(false);
             });
 
             modelBuilder.Entity<User>(entity =>

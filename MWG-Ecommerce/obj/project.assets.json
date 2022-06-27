@@ -7242,6 +7242,7 @@
   "projectFileDependencyGroups": {
     "net5.0": [
       "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation >= 5.0.16",
+      "Microsoft.EntityFrameworkCore.Design >= 5.0.17",
       "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.17",
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.17",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 5.0.2"
@@ -7253,11 +7254,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\ItFresher\\EcommerceProject\\MWG-Ecommerce\\MWG-Ecommerce\\MWG-Ecommerce.csproj",
+      "projectUniqueName": "D:\\ItFresher\\TestProject\\MWG-Ecommerce\\MWG-Ecommerce\\MWG-Ecommerce.csproj",
       "projectName": "MWG-Ecommerce",
-      "projectPath": "D:\\ItFresher\\EcommerceProject\\MWG-Ecommerce\\MWG-Ecommerce\\MWG-Ecommerce.csproj",
+      "projectPath": "D:\\ItFresher\\TestProject\\MWG-Ecommerce\\MWG-Ecommerce\\MWG-Ecommerce.csproj",
       "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-      "outputPath": "D:\\ItFresher\\EcommerceProject\\MWG-Ecommerce\\MWG-Ecommerce\\obj\\",
+      "outputPath": "D:\\ItFresher\\TestProject\\MWG-Ecommerce\\MWG-Ecommerce\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -7289,6 +7290,12 @@
           "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
             "target": "Package",
             "version": "[5.0.16, )"
+          },
+          "Microsoft.EntityFrameworkCore.Design": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[5.0.17, )"
           },
           "Microsoft.EntityFrameworkCore.SqlServer": {
             "target": "Package",

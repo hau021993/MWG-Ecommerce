@@ -22,8 +22,6 @@ namespace MWG_Ecommerce.Models
         [Required]
         [StringLength(50)]
         public string CategoryName { get; set; }
-        [Column("SubCategoryID")]
-        public int SubCategoryId { get; set; }
         [StringLength(255)]
         public string Description { get; set; }
 

@@ -21,6 +21,9 @@ namespace MWG_Ecommerce.Models
         [Required]
         [StringLength(50)]
         public string CompanyName { get; set; }
+        [Required]
+        [StringLength(150)]
+        public string Picture { get; set; }
         [StringLength(50)]
         public string Address { get; set; }
         [StringLength(10)]

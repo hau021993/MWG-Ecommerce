@@ -25,7 +25,7 @@ namespace MWG_Ecommerce.Models
         [Column("ColorID")]
         public int? ColorId { get; set; }
         [Column("SizeID")]
-        public int SizeId { get; set; }
+        public int? SizeId { get; set; }
         [Column("SupplierID")]
         public int SupplierId { get; set; }
         [Column("CategoryID")]
@@ -33,15 +33,13 @@ namespace MWG_Ecommerce.Models
         [Column("DiscountID")]
         public int? DiscountId { get; set; }
         [Required]
-        [StringLength(60)]
+        [StringLength(150)]
         public string ProductName { get; set; }
-        [Required]
-        [StringLength(255)]
         public string ProductDescription { get; set; }
         [Column(TypeName = "decimal(18, 0)")]
         public decimal Price { get; set; }
         [Required]
-        [StringLength(50)]
+        [StringLength(150)]
         public string Picture { get; set; }
         public int QuanlityInStock { get; set; }
         [StringLength(50)]

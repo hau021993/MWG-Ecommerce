@@ -1,0 +1,92 @@
+﻿@model MWG_Ecommerce.DTO.SupplierDTO
+
+@{
+    ViewData["Title"] = "SupplierManager";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Quản lí sản phẩm </h1>
+@*<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-1 mb-1 border-bottom position-relative">
+    <div class="m-2">
+        <a type="submit" class="btn btn-success btn__add--book text-white"  
+           onclick="showInPopup('@Url.Action("AddOrEditProduct","ProductManager",null,Context.Request.Scheme)','Thêm sản phẩm mới')">
+            <i class="fas fa-plus">Thêm sản phẩm</i>
+        </a>
+    </div>
+
+
+</div>*@
+
+<!-- TABLE VIEW -->
+<div class="table-responsive rounded-top rounded-bottom">
+    <table class="table table-bordered" id="myTable">
+        <thead>
+            <tr class="table-warning">
+                <th scope="col">
+                   Mã số
+                </th>
+                <th scope="col">
+                    Tên
+                </th>
+                <th style=" width:15%" scope="col">Hình ảnh</th>
+                <th style=" width:15%" scope="col">
+                    Địa chỉ 
+                </th>
+                <th style=" width:15%" scope="col">
+                    Điện thoại 
+                </th>
+                <th style=" width:15%" scope="col">
+                    Email
+                </th>
+                <th style=" width:15%" scope="col">
+                    Ghi chú
+                </th>                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Suppliers)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SupplierId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyName)
+                </td>
+                <td class="align-middle text-center">
+                    <img style="height:120px;width:auto;" class="card-img-top " src=@item.Picture
+                         alt="Card image cap">
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address) 
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+
+                  <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+
+                  <td>
+                    @Html.DisplayFor(modelItem => item.Note)
+                </td>
+
+                <td class="align-middle text-center">
+                    <button type="button" class="btn btn-warning m-1 btn__edit--book" 
+                            onclick="showInPopup('@Url.Action("AddOrEditProduct","ProductManager",new { id= item.SupplierId },Context.Request.Scheme)','Sửa nhà cung cấp/thương hiệu mới')">
+                        <i class="far fa-edit"></i>
+                    </button>
+                    <form asp-action="Delete" asp-route-id="@item.SupplierId" onsubmit="return ajaxDeleteProduct(this);" class="d-inline">
+                    <button type="submit" class="btn btn-danger btn__delete--product">
+                        <i style="color:black;" class="far fa-trash-alt"></i>
+                    </button>
+                    </form>
+                </td>
+            </tr>}
+        </tbody>
+    </table>
+
+    </div>
+     }

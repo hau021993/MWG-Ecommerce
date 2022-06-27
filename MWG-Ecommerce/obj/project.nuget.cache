@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2zer8DCEk5lSztAMA3hWk7DLoIsDo0G7aoXNf3j2M8cPj520BZXdmObWFehf5EMkAWy04rA7yzP3zYt4p61qqw==",
+  "dgSpecHash": "prdcSw52iPBbsL1ZoyOsBDzjmhWz0IjKtbpqejrpy+v8IZadWoc89tg8kEgJmumXuc4u+hOv8SAw+HutjsBNiQ==",
   "success": true,
-  "projectFilePath": "D:\\ItFresher\\EcommerceProject\\MWG-Ecommerce\\MWG-Ecommerce\\MWG-Ecommerce.csproj",
+  "projectFilePath": "D:\\ItFresher\\TestProject\\MWG-Ecommerce\\MWG-Ecommerce\\MWG-Ecommerce.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\HP\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",

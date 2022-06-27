@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MWG_Ecommerce.Data;
+using Microsoft.AspNetCore.Http;
 
 namespace MWG_Ecommerce
 {
@@ -26,7 +27,17 @@ namespace MWG_Ecommerce
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<shoppingonlineContext>();
+            services.AddDbContext<ShoppingonlineContext>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = "user_id";
+                options.IdleTimeout = TimeSpan.FromHours(1);
+            });
+
+            services.AddMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,13 +58,15 @@ namespace MWG_Ecommerce
 
             app.UseRouting();
 
+            app.UseSession();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Auth}/{action=Login}/{id?}");
             });
         }
     }
