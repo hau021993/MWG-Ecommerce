@@ -10,6 +10,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MWG_Ecommerce.Data;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Session;
 
 namespace MWG_Ecommerce
 {
@@ -38,6 +40,12 @@ namespace MWG_Ecommerce
             });
 
             services.AddMemoryCache();
+
+            services.AddMvc();
+
+            services.AddDistributedMemoryCache();
+
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

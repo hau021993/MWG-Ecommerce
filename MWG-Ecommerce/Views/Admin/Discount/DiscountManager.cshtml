@@ -1,0 +1,72 @@
+﻿@model IEnumerable<MWG_Ecommerce.Models.Discount>
+
+@{
+    ViewData["Title"] = "DiscountManager";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 style="text-align:center">Quản lí khuyến mãi</h1>
+
+<p>
+    <a onclick="generalShowInPopup('@Url.Action("AddOrEditDiscount","DiscountManager",null,Context.Request.Scheme)','Thêm khuyến mãi')" class="btn btn-success btn btn-success text-white"> <i class="fas fa-random"></i> Thêm khuyến mãi</a>
+</p>
+
+
+<!-- TABLE VIEW --> 
+<div class="table-responsive rounded-top rounded-bottom">
+    <table style="text-align:center" class="table table-bordered" id="myTable">
+        <thead>
+            <tr class="table-warning">
+                <th style=" width:10%" scope="col">
+                   Mã số
+                </th>
+                <th style=" width:15%" scope="col">
+                    Nội dung khuyến mãi 
+                </th>          
+                <th style=" width:15%" scope="col">
+                    Giá khuyến mãi 
+                </th>   
+                <th style=" width:15%" scope="col">
+                    Thời gian bắt đầu
+                </th>   
+                <th style=" width:15%" scope="col">
+                    Thời gian kết thúc 
+                </th>   
+                <th class="align-middle" style=" width:15%;" scope="col">Hoạt động</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiscountId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiscountContent)
+                </td>  
+                <td>
+                    @String.Format("{0:0,0}", item.DiscountPrice) VND
+                </td>  
+                 <td>
+                    @String.Format("{0:dd/MM/yyyy}", item.StartTime)
+                </td>  
+                 <td>
+                    @String.Format("{0:dd/MM/yyyy}", item.EndTime)
+                </td>  
+                <td class="align-middle text-center">
+                    <button type="button" class="btn btn-info text-white" 
+                            onclick="showInPopup('@Url.Action("AddOrEditDiscount","DiscountManager",new { id= item.DiscountId },Context.Request.Scheme)','Sửa thông tin')">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <form asp-action="Delete" asp-route-id="@item.DiscountId" onsubmit="return ajaxDelete(this);" class="d-inline">
+                    <button type="submit" class="btn btn-danger">
+                        <i style="color:black;" class="far fa-trash-alt"></i>
+                    </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>

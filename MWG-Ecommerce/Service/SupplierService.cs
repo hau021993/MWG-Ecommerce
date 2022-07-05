@@ -22,5 +22,39 @@ namespace MWG_Ecommerce.Service
         {
             return _context.Suppliers.ToList();
         }
+
+        public Supplier FindSupplierById(int idSupplier)
+        {
+            return _context.Suppliers.Find(idSupplier);
+        }
+
+        public async Task<bool> AddSupplier(Supplier supplier)
+        {
+            _context.Add(supplier);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> UpdateSupplier(Supplier supplier)
+        {
+            _context.Update(supplier);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> DeleteSupplier(Supplier supplier)
+        {
+            try
+            {
+                _context.Remove(supplier);
+                await _context.SaveChangesAsync();
+                return true;
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MWG_Ecommerce.Models;
 using System;
@@ -20,11 +21,13 @@ namespace MWG_Ecommerce.Controllers
 
         public IActionResult Index()
         {
+            //HttpContext.Session.SetInt32("id", 2);
             return View();
         }
 
         public IActionResult Privacy()
         {
+            ViewBag.SessionUserId = HttpContext.Session.GetInt32("id");
             return View();
         }
 

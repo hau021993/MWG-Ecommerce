@@ -1,45 +1,57 @@
-﻿@model MWG_Ecommerce.DTO.ProductPagingDTO
+﻿@model IEnumerable<MWG_Ecommerce.Models.Product>
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
 
 @{
     ViewData["Title"] = "ProductManager";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    Pager pager = new Pager();
+
+    int pageNo = 0;
+
+    if(ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
 }
 
-<h1>Quản lí sản phẩm </h1>
+<h1 style="text-align:center">Quản lí sản phẩm </h1>
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-1 mb-1 border-bottom position-relative">
     <div class="m-2">
-        <a type="submit" class="btn btn-success btn__add--book text-white"  
-           onclick="showInPopup('@Url.Action("AddOrEditProduct","ProductManager",null,Context.Request.Scheme)','Thêm sản phẩm mới')">
-            <i class="fas fa-plus">Thêm sản phẩm</i>
+        <a class="btn btn-success btn btn-success text-white"  
+           onclick="showInPopup('@Url.Action("AddOrEditProduct","ProductManager",null,Context.Request.Scheme)','Thêm sản phẩm')">
+            <i class="fas fa-random"></i> Thêm sản phẩm
         </a>
     </div>
-
-
 </div>
+
+@*<partial name="_pagerproduct" model="@pager" />*@
 
 <!-- TABLE VIEW -->
 <div class="table-responsive rounded-top rounded-bottom">
-    <table class="table table-bordered" id="myTable">
+    <table style="text-align:center" class="table table-bordered" id="myTable">
         <thead>
             <tr class="table-warning">
-                <th scope="col">
+                 <th style=" width:5%" scope="col">
                    Mã số
                 </th>
-                <th scope="col">
+                 <th style=" width:15%" scope="col">
                     Tên
                 </th>
                 <th style=" width:15%" scope="col">Hình ảnh</th>
-                <th style=" width:15%" scope="col">
+                <th style=" width:10%" scope="col">
                     Giá 
                 </th>
-                <th style=" width:15%" scope="col">
+                <th style=" width:10%" scope="col">
                     Số lượng tồn 
                 </th>
                 <th class="align-middle" style=" width:10%;" scope="col">Hoạt động</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.Products)
+            @foreach (var item in Model)
             {
             <tr>
                 <td>
@@ -53,7 +65,7 @@
                          alt="Card image cap">
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Price) VNĐ
+                    @String.Format("{0:0,0}", item.Price) VND
                 </td>
 
                 <td>
@@ -61,73 +73,58 @@
                 </td>
 
                 <td class="align-middle text-center">
-                    <button type="button" class="btn btn-warning m-1 btn__edit--book" 
-                            onclick="showInPopup('@Url.Action("AddOrEditProduct","ProductManager",new { id= item.ProductId },Context.Request.Scheme)','Sửa sản phẩm mới')">
-                        <i class="far fa-edit"></i>
+                    <button type="button" class="btn btn-info text-white" 
+                            onclick="showInPopup('@Url.Action("AddOrEditProduct","ProductManager",new { id = item.ProductId },Context.Request.Scheme)','Sửa sản phẩm')">
+                        <i class="fas fa-pencil-alt"></i>
                     </button>
                     <form asp-action="Delete" asp-route-id="@item.ProductId" onsubmit="return ajaxDeleteProduct(this);" class="d-inline">
-                    <button type="submit" class="btn btn-danger btn__delete--product">
+                    <button type="submit" class="btn btn-danger">
                         <i style="color:black;" class="far fa-trash-alt"></i>
                     </button>
                     </form>
                 </td>
             </tr>}
         </tbody>
-    </table>
+    </table> 
+</div>
 
+@*
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))></a>
+*@
 
-   @if (Model.PageCount > 1) { 
-    
-    <div class="row col-sm-10">
-        <div class="col-sm-2">
-            Tổng trang: @Model.PageCount
-        </div>
-        @if (Model.CurrentPageIndex > 1)
-        {
-            <a class="page-links btn btn-outline-primary" asp-controller="ProductManager" asp-action="Index" asp-route-currentPageIndex="1">First</a>
+@*<partial name="_pagerproduct" model="@pager" />*@
 
-        }
-        else
-        {
-            <span class="btn btn-outline-primary active">First</span>
-        }&nbsp; &nbsp;
+<div class="container">
+    @if(pager.TotalPages > 0)
+    {
+        <ul class="pagination justify-content-end">
 
-        @for (int i = 1; i <= Model.PageCount; i++)
-        {
-            @if (Model.CurrentPageIndex != i)
+            @if(pager.CurrentPage > 1)
             {
-                <a class="page-links btn btn-outline-primary"asp-controller="ProductManager" asp-action="Index" asp-route-currentPageIndex="@i">@i</a>
-
+                 <li class="page-item">
+                    <a class="page-link" asp-controller="ProductManager" asp-action="Index" asp-route-pg="1">First</a>
+                </li>
+                 <li>
+                    <a class="page-link" asp-controller="ProductManager" asp-action="Index" asp-route-pg="@(pager.CurrentPage - 1)">Previous</a>
+                </li>
             }
-            else
+
+            @for(var pge = pager.StartPage; pge <= pager.EndPage; pge++)
             {
-                <span class="btn btn-outline-primary active">@i</span>
-
+                <li class="page-item @(pge == pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="ProductManager" asp-action="Index" asp-route-pg="@pge"> @pge </a>
+                </li>
             }
-        }
 
-        @if (Model.CurrentPageIndex < Model.PageCount)
-        {
-            <a class="page-links btn btn-outline-primary" asp-controller="ProductManager" asp-action="Index" asp-route-currentPageIndex="@(Model.CurrentPageIndex+1)">Next</a>
-
-        }
-        else
-        {
-            <span class="btn btn-outline-primary active" >Next </span>
-
-        }&nbsp; &nbsp;
-
-        @if (Model.CurrentPageIndex < Model.PageCount)
-        {
-            <a class="page-links btn btn-outline-primary"  asp-controller="ProductManager" asp-action="Index" asp-route-currentPageIndex="@Model.PageCount">Last</a>
-
-        }
-        else
-        {
-            <span class="btn btn-outline-primary active">Last</span>
-
-        }&nbsp; &nbsp;
-
-    </div>
-     }
+            @if(pager.CurrentPage < pager.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="ProductManager" asp-action="Index" asp-route-pg="@(pager.CurrentPage + 1)">Next</a>
+                </li>
+                 <li>
+                    <a class="page-link" asp-controller="ProductManager" asp-action="Index" asp-route-pg="@(pager.TotalPages)">Last</a>
+                </li>
+            }
+        </ul>
+    }
 </div>

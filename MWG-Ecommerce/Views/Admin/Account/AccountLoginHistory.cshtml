@@ -1,0 +1,52 @@
+﻿@model MWG_Ecommerce.Models.User
+
+@{
+    ViewData["Title"] = "AccountLoginHistory";
+    Layout = null;
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AccountLoginHistory" asp-route-id="@Model.UserId" onsubmit="return ajaxPost(this);" autocomplete="off">
+        <div class="table-responsive rounded-top rounded-bottom">
+    <table style="text-align:center" class="table table-bordered" id="myTable">
+        <thead>
+            <tr class="table-warning">
+                <th style=" width:5%" scope="col">
+                   Mã số
+                </th>
+                <th style=" width:15%" scope="col">
+                   Tên đăng nhập
+                </th>          
+                <th style=" width:15%" scope="col">
+                   Thời gian đăng nhập
+                </th>                  
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.LoginHistories)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HistoryId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Username)
+                </td>  
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>                                           
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

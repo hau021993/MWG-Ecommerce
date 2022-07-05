@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using MWG_Ecommerce.Data;
+using MWG_Ecommerce.Service;
 using MWG_Ecommerce.Models;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,14 @@ namespace MWG_Ecommerce.Controllers
     {
         private readonly ILogger<AuthController> _logger;
         private readonly ShoppingonlineContext _context;
+        private readonly LoginHistoryService loginHistoryService;
+        LoginHistory loginHistory = new LoginHistory();        
 
         public AuthController(ILogger<AuthController> logger, ShoppingonlineContext context)
         {
             _logger = logger;
             _context = context;
+            loginHistoryService = new LoginHistoryService(context);
         }
 
         public ActionResult Login()
@@ -30,8 +34,8 @@ namespace MWG_Ecommerce.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(string username, string pass)
-        {
-
+        {            
+            DateTime datetime = DateTime.Now;
             var user = _context.Users.Where(u => u.Username == username && u.Passwword == pass).FirstOrDefault();
             if (user != null)
             {
@@ -44,7 +48,17 @@ namespace MWG_Ecommerce.Controllers
                 else
                 {
                     HttpContext.Session.SetString("role", "ROLE_ADMIN");
-                }
+                    HttpContext.Session.SetInt32("id", user.UserId);
+                    int idSession = (int)HttpContext.Session.GetInt32("id");
+                    var status = _context.Users.Find(idSession);
+                    var savehistorylogin = new LoginHistory();
+                    savehistorylogin.UserId = idSession;
+                    savehistorylogin.Time = datetime;
+                    status.Status = "Online";
+                    _context.LoginHistories.Add(savehistorylogin);
+                    _context.SaveChanges();
+                    return Redirect(Url.Action("Index", "Admin"));
+                }             
                 return Redirect(Url.Action("Index", "Admin"));
             }
             else
@@ -56,7 +70,11 @@ namespace MWG_Ecommerce.Controllers
         }
         // Logout
         public ActionResult Logout()
-        {
+        {           
+            int idSession = (int)HttpContext.Session.GetInt32("id");
+            var status = _context.Users.Find(idSession);
+            status.Status = "Offline";
+            _context.SaveChanges();  
             HttpContext.Session.Clear();
 
             return RedirectToAction(nameof(Login));

@@ -1,0 +1,90 @@
+﻿@model MWG_Ecommerce.Models.Supplier
+@{
+    ViewData["Title"] = "AddSupplier";
+    Layout = null;
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AddOrEditSupplier" asp-route-id="@Model.SupplierId" onsubmit="return ajaxPost(this);" autocomplete="off">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SupplierId" />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="CompanyName" class="control-label">Tên nhà cung cấp/thương hiệu</label>
+                        <input asp-for="CompanyName" required class="form-control" />
+                        <span asp-validation-for="CompanyName" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Picture" class="control-label">Đường dẫn hình ảnh</label>
+                        <textarea asp-for="Picture" required class="form-control"></textarea>
+                        <span asp-validation-for="Picture" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Address" class="control-label">Địa chỉ</label>
+                        <textarea asp-for="Address" required class="form-control"></textarea>
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Phone" class="control-label">Số điện thoại</label>
+                        <input asp-for="Phone" type="tel" maxlength="10" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                </div>
+
+                 <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label">Email</label>
+                        <input asp-for="Email" type="email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+             <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Note" class="control-label">Ghi chú</label>
+                        <textarea asp-for="Note" class="form-control"></textarea>
+                        <span asp-validation-for="Note" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <input style="margin-left:180px; background-color:lightseagreen" type="submit" value="Thực hiện" class="btn btn-primary btn-block" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

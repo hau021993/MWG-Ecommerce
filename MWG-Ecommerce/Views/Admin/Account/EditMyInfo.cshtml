@@ -1,0 +1,100 @@
+﻿@model MWG_Ecommerce.Models.User
+@{
+    ViewData["Title"] = "EditMyInfo";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 style="text-align:center">Sửa thông tin tài khoản</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="MyInfoDetail" asp-route-id="@Model.UserId" autocomplete="off">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UserId" />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label">Tên người dùng</label>
+                        <input asp-for="Name" disabled class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>               
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Username" class="control-label">Tên đăng nhập</label>
+                        <input asp-for="Username" disabled type="text" class="form-control" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                </div>               
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Address" class="control-label">Địa chỉ</label>
+                        <textarea asp-for="Address" disabled type="text" class="form-control"></textarea>
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label">Email</label>
+                        <input asp-for="Email" disabled type="email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                      <div class="form-group">
+                        <label asp-for="Phone" class="control-label">Số điện thoại</label>
+                        <input asp-for="Phone" disabled type="tel" maxlength="10" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                 <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Sex" class="control-label">Giới tính</label>
+                        <select asp-for="Sex" disabled class="form-control">
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                            <option value="Khác">Khác</option>
+                            </select>
+                        <span asp-validation-for="Sex" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                     <div class="form-group">
+                        <label asp-for="Role" class="control-label">Vai trò</label>
+                        <select asp-for="Role" disabled class="form-control">
+                            <option value="True">Quản trị viên</option>
+                            <option value="False">Người dùng</option>                           
+                            </select>
+                        <span asp-validation-for="Role" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <input onclick="showInPopup('@Url.Action("EdtiMyInfo","AccountManager",new { id= @Model.UserId },Context.Request.Scheme)','Sửa thông tin')"style="margin-left:470px; background-color:lightseagreen" type="submit" value="Thay đổi thông tin" class="btn btn-primary btn-block" />
+            </div>
+        </form>
+    </div>
+</div>

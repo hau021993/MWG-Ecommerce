@@ -1,0 +1,67 @@
+﻿@model IEnumerable<MWG_Ecommerce.Models.Color>
+
+@{
+    ViewData["Title"] = "ColorManager";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    Pager pager = new Pager();
+
+    int pageNo = 0;
+
+    if(ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
+}
+
+<h1 style="text-align:center">Quản lí màu sắc sản phẩm</h1>
+
+<p>
+    <a onclick="generalShowInPopup('@Url.Action("AddOrEditColor","ColorManager",null,Context.Request.Scheme)','Thêm màu sắc')" class="btn btn-success btn btn-success text-white"> <i class="fas fa-random"></i> Thêm màu sắc</a>
+</p>
+
+<partial name="_pagercolor" model="@pager" />
+
+<!-- TABLE VIEW -->
+<div class="table-responsive rounded-top rounded-bottom">
+    <table style="text-align:center" class="table table-bordered" id="myTable">
+        <thead>
+            <tr class="table-warning">
+                <th style=" width:15%" scope="col">
+                   Mã số
+                </th>
+                <th style=" width:15%" scope="col">
+                    Màu sắc
+                </th>              
+                <th class="align-middle" style=" width:15%;" scope="col">Hoạt động</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ColorId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Color1)
+                </td>         
+                <td class="align-middle text-center">
+                    <button type="button" class="btn btn-info text-white" 
+                            onclick="showInPopup('@Url.Action("AddOrEditColor","ColorManager",new { id= item.ColorId },Context.Request.Scheme)','Sửa màu sắc')">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <form asp-action="Delete" asp-route-id="@item.ColorId" onsubmit="return ajaxDelete(this);" class="d-inline">
+                    <button type="submit" class="btn btn-danger">
+                        <i style="color:black;" class="far fa-trash-alt"></i>
+                    </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+
+<partial name="_pagercolor" model="@pager" />

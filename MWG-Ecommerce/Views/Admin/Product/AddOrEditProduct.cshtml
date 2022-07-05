@@ -1,0 +1,181 @@
+﻿@model MWG_Ecommerce.Models.Product
+@{
+    ViewData["Title"] = "AddProduct";
+    Layout = null;
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AddOrEditProduct" asp-route-id="@Model.ProductId" onsubmit="return ajaxPostProduct(this);" autocomplete="off">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ProductId" />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="ProductName" class="control-label">Tên sản phẩm</label>
+                        <textarea asp-for="ProductName" required class="form-control"></textarea>
+                        <span asp-validation-for="ProductName" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+                <br />
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="form-group">
+                        <label asp-for="ColorId" class="control-label">Màu sắc</label>
+                        <div asp-for="ColorId">
+                            @Html.DropDownList("Color")
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label asp-for="SizeId" class="control-label">Kích cỡ</label>
+                        <div asp-for="SizeId">
+                            @Html.DropDownList("Size")
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+           
+            <div class="row">   
+                
+                <div class="col-md-7">
+                    <div class="form-group">
+                        <label asp-for="CategoryId" class="control-label">Loại sản phẩm</label>
+                        <div asp-for="CategoryId">
+                            @Html.DropDownList("Category")
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label asp-for="SupplierId" class="control-label">Thương hiệu</label>
+                        <div asp-for="SupplierId">
+                            @Html.DropDownList("Supplier")
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+             <br />
+
+            <div class="row">
+                
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Picture" class="control-label">Đường dẫn hình ảnh</label>
+                        <textarea asp-for="Picture" required class="form-control"></textarea>
+                        <span asp-validation-for="Picture" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+           <br />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label">Giá tiền</label>
+                        <input asp-for="Price" required type="number" min="0" class="form-control"/>
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="QuanlityInStock" class="control-label">Số lượng tồn</label>
+                        <input asp-for="QuanlityInStock" required type="number" min="0" class="form-control" />
+                        <span asp-validation-for="QuanlityInStock" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="ProductDescription" class="control-label">Mô tả sản phẩm</label>
+                        <textarea asp-for="ProductDescription" class="form-control"></textarea>
+                        <span asp-validation-for="ProductDescription" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Warranty" class="control-label">Bảo hành</label>
+                        <select asp-for="Warranty" class="form-control">
+                            <option value="Không bảo hành">Không bảo hành</option>
+                            <option value="1 tháng">1 tháng</option>
+                            <option value="2 tháng">2 tháng</option>
+                            <option value="3 tháng">3 tháng</option>
+                            <option value="4 tháng">4 tháng</option>
+                            <option value="5 tháng">5 tháng</option>
+                            <option value="6 tháng">6 tháng</option>
+                            <option value="7 tháng">7 tháng</option>
+                            <option value="8 tháng">8 tháng</option>
+                            <option value="9 tháng">9 tháng</option>
+                            <option value="10 tháng">10 tháng</option>
+                            <option value="11 tháng">11 tháng</option>
+                            <option value="12 tháng">12 tháng</option>
+                            <option value="13 tháng">13 tháng</option>
+                            <option value="14 tháng">14 tháng</option>
+                            <option value="15 tháng">15 tháng</option>
+                            <option value="16 tháng">16 tháng</option>
+                            <option value="17 tháng">17 tháng</option>
+                            <option value="18 tháng">18 tháng</option>
+                            <option value="19 tháng">19 tháng</option>
+                            <option value="20 tháng">20 tháng</option>
+                            <option value="21 tháng">21 tháng</option>
+                            <option value="22 tháng">22 tháng</option>
+                            <option value="23 tháng">23 tháng</option>
+                            <option value="24 tháng">24 tháng</option>
+                        </select>
+                        <span asp-validation-for="Warranty" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Views" class="control-label">Lượt xem</label>
+                        <input asp-for="Views" type="number" min="0" class="form-control" />
+                        <span asp-validation-for="Views" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+           <div class="row">
+                
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Note" class="control-label">Ghi chú</label>
+                        <textarea asp-for="Note" class="form-control"></textarea>
+                        <span asp-validation-for="Note" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <div class="form-group">
+                <input style="margin-left:180px; background-color:lightseagreen" type="submit" value="Thực hiện" class="btn btn-primary btn-block" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

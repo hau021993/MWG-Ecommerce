@@ -1,0 +1,69 @@
+﻿@model IEnumerable<MWG_Ecommerce.Models.User>
+
+@{
+    ViewData["Title"] = "AccountManager";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 style="text-align:center">Quản lí tài khoản</h1>
+
+<p>
+    <a onclick="generalShowInPopup('@Url.Action("AddAccount","AccountManager",null,Context.Request.Scheme)','Thêm tài khoản')" class="btn btn-success btn btn-success text-white"> <i class="fas fa-random"></i> Thêm tài khoản</a>
+</p>
+
+<!-- TABLE VIEW -->
+<div class="table-responsive rounded-top rounded-bottom">
+    <table style="text-align:center" class="table table-bordered" id="myTable">
+        <thead>
+            <tr class="table-warning">
+                <th style=" width:10%" scope="col">
+                   Mã số
+                </th>
+                <th style=" width:15%" scope="col">
+                    Tên người dùng 
+                </th>          
+                <th style=" width:15%" scope="col">
+                    Tên đăng nhập 
+                </th>    
+                <th style=" width:10%" scope="col">
+                    Giới tính 
+                </th>    
+                <th class="align-middle" style=" width:15%;" scope="col">Hoạt động</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>  
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>  
+                <td>
+                        @Html.DisplayFor(modelItem => item.Sex)
+                </td>                 
+                <td class="align-middle text-center">
+                    <button type="button" class="btn btn-info text-white" 
+                            onclick="showInPopup('@Url.Action("AddAccount","AccountManager",new { id= item.UserId },Context.Request.Scheme)','Xem thông tin chi tiết')">
+                        <i class="fa fa-info-circle"></i>
+                    </button>
+                    <button type="button" class="btn btn-info text-white" 
+                            onclick="showInPopup('@Url.Action("AccountLoginHistory","AccountManager",new { id= item.UserId },Context.Request.Scheme)','Lịch sử đăng nhập')">
+                        <i class="fa fa-history" style="color:red"></i>
+                    </button>
+                    <form asp-action="Delete" asp-route-id="@item.UserId" onsubmit="return ajaxDelete(this);" class="d-inline">
+                    <button type="submit" class="btn btn-danger">
+                        <i style="color:black;" class="far fa-trash-alt"></i>
+                    </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>

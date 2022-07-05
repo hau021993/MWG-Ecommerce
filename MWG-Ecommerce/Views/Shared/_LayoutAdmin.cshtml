@@ -9,6 +9,8 @@
         <meta name="author" content="" />
         <title>Trang quản trị</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+          crossorigin="anonymous" />
         <link href="~/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     </head>
@@ -16,13 +18,13 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">MWG Ecommerce</a>
+            <a class="navbar-brand ps-3 @ViewData["Product"]" asp-controller="ProductManager" asp-action="Index">MWG Ecommerce</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Tìm kiếm..." aria-describedby="btnNavbarSearch" />
+                    <input class="form-control" type="text" placeholder="Tìm kiếm..." aria-label="Search for...." aria-describedby="btnNavbarSearch" />
                     <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
                 </div>
             </form>
@@ -32,8 +34,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Cài đặt</a></li>
-                        <li><a class="dropdown-item" href="#!">Lịch sử đăng nhập</a></li>
+                        <li><a class="dropdown-item" asp-controller="AccountManager" asp-action="MyInfoDetail">Xem thông tin cá nhân</a></li>                      
+                        <li><a class="dropdown-item" asp-controller="AccountManager" asp-action="MyAccountLoginHistory">Lịch sử đăng nhập</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" asp-controller="Auth" asp-action="Logout">Đăng xuất</a></li>
                     </ul>
@@ -73,8 +75,8 @@
                                     <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
                                             <a class="nav-link @ViewData["Product"]" asp-controller="ProductManager" asp-action="Index" >Thông tin chung</a>
-                                            <a class="nav-link" >Màu sắc</a>
-                                            <a class="nav-link" >Kích cỡ</a>
+                                            <a class="nav-link @ViewData["Color"]" asp-controller="ColorManager" asp-action="Index">Màu sắc</a>
+                                            <a class="nav-link @ViewData["Size"]" asp-controller="SizeManager" asp-action="Index">Kích cỡ</a>
                                         </nav>
                                     </div>
 
@@ -83,15 +85,15 @@
                                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                     </a>*@
 
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                                    <a class="nav-link collapsed">
                                         Đơn hàng
                                         <div><i></i></div>
                                     </a>
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                                    <a class="nav-link collapsed  @ViewData["Account"]" asp-controller="AccountManager" asp-action="Index">
                                         Tài khoản
                                         <div><i></i></div>
                                     </a>
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                                    <a class="nav-link collapsed @ViewData["Discount"]" asp-controller="DiscountManager" asp-action="Index">
                                         Khuyến mãi
                                         <div><i></i></div>
                                     </a>
@@ -99,7 +101,7 @@
                                         Nhà cung cấp/Thương hiệu
                                         <div><i></i></div>
                                     </a>
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                                    <a class="nav-link collapsed @ViewData["Category"]" asp-controller="CategoryManager" asp-action="Index">
                                         Loại sản phẩm
                                         <div><i></i></div>
                                     </a>
@@ -107,14 +109,14 @@
                             </div>
                              <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                Thông kê 
+                                Thống kê 
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">Tổng số doanh thu</a>
-                                    <a class="nav-link" href="#">Tổng số đơn đặt hàng</a>
-                                    <a class="nav-link" href="#">Tổng số người dùng</a>
+                                    <a class="nav-link">Tổng số doanh thu</a>
+                                    <a class="nav-link">Tổng số đơn đặt hàng</a>
+                                    <a class="nav-link">Tổng số người dùng</a>
                                 </nav>
                             </div>
                       
@@ -149,6 +151,23 @@
                     </div>
                 </main>
 
+
+                        <!-- ===================CUSTOME POP-UP MODAL=================== -->
+                <div class="modal" tabindex="-1" role="dialog" id="form-modal">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
@@ -171,5 +190,8 @@
         <script src="~/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="~/js/datatables-simple-demo.js"></script>
+        <script src="~/js/Admin/productAjaxHandler.js" asp-append-version="true"></script>
+        <script src="~/js/Admin/generalAjaxHandler.js" asp-append-version="true"></script>
+       @* @await RenderSectionAsync("Scripts", required: false)*@
     </body>
 </html>

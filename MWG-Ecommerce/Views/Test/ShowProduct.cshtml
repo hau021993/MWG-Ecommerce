@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>ShowProduct</h1>
+<h1 style="text-align:center">ShowProduct</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -18,10 +18,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.SizeId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DiscountId)
-            </th>
+            </th>          
             <th>
                 @Html.DisplayNameFor(model => model.ProductName)
             </th>
@@ -63,9 +60,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SizeId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiscountId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProductName)

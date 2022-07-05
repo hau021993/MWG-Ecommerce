@@ -1,0 +1,53 @@
+﻿@model IEnumerable<MWG_Ecommerce.Models.Size>
+
+@{
+    ViewData["Title"] = "SizeManager";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 style="text-align:center">Quản lí kích cỡ sản phẩm</h1>
+
+<p>
+    <a onclick="generalShowInPopup('@Url.Action("AddOrEditSize","SizeManager",null,Context.Request.Scheme)','Thêm kích cỡ')" class="btn btn-success btn btn-success text-white"> <i class="fas fa-random"></i> Thêm kích cỡ</a>
+</p>
+
+<!-- TABLE VIEW -->
+<div class="table-responsive rounded-top rounded-bottom">
+    <table style="text-align:center" class="table table-bordered" id="myTable">
+        <thead>
+            <tr class="table-warning">
+                <th style=" width:15%" scope="col">
+                   Mã số
+                </th>
+                <th style=" width:15%" scope="col">
+                    Kích thước
+                </th>              
+                <th class="align-middle" style=" width:15%;" scope="col">Hoạt động</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SizeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Size1)
+                </td>         
+                <td class="align-middle text-center">
+                    <button type="button" class="btn btn-info text-white" 
+                            onclick="generalShowInPopup('@Url.Action("AddOrEditSize","SizeManager",new { id= item.SizeId },Context.Request.Scheme)','Sửa kích cỡ')">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <form asp-action="Delete" asp-route-id="@item.SizeId" onsubmit="return ajaxDelete(this);" class="d-inline">
+                    <button type="submit" class="btn btn-danger">
+                        <i style="color:black;" class="far fa-trash-alt"></i>
+                    </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>

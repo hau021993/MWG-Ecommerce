@@ -1,11 +1,11 @@
-﻿@model MWG_Ecommerce.DTO.SupplierDTO
+﻿@model IEnumerable<MWG_Ecommerce.Models.Supplier>
 
 @{
     ViewData["Title"] = "SupplierManager";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Quản lí sản phẩm </h1>
+<h1 style="text-align:center">Quản lí nhà cung cấp/thương hiệu</h1>
 @*<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-1 mb-1 border-bottom position-relative">
     <div class="m-2">
         <a type="submit" class="btn btn-success btn__add--book text-white"  
@@ -17,35 +17,31 @@
 
 </div>*@
 
+<p>
+    <a onclick="generalShowInPopup('@Url.Action("AddOrEditSupplier","SupplierManager",null,Context.Request.Scheme)','Thêm nhà cung cấp/thương hiệu')" class="btn btn-success btn btn-success text-white"> <i class="fas fa-random"></i> Thêm nhà cung cấp/thương hiệu</a>
+</p>
+
 <!-- TABLE VIEW -->
 <div class="table-responsive rounded-top rounded-bottom">
-    <table class="table table-bordered" id="myTable">
+    <table style="text-align:center" class="table table-bordered" id="myTable">
         <thead>
             <tr class="table-warning">
-                <th scope="col">
+                <th style=" width:10%" scope="col">
                    Mã số
                 </th>
-                <th scope="col">
-                    Tên
+                <th style=" width:10%" scope="col">
+                    Tên công ty
                 </th>
                 <th style=" width:15%" scope="col">Hình ảnh</th>
                 <th style=" width:15%" scope="col">
-                    Địa chỉ 
-                </th>
-                <th style=" width:15%" scope="col">
-                    Điện thoại 
-                </th>
-                <th style=" width:15%" scope="col">
-                    Email
-                </th>
-                <th style=" width:15%" scope="col">
-                    Ghi chú
-                </th>                
+                   Địa chỉ 
+                </th>              
+                <th class="align-middle" style=" width:10%;" scope="col">Hoạt động</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.Suppliers)
-            {
+        @foreach (var item in Model)
+        {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.SupplierId)
@@ -58,35 +54,21 @@
                          alt="Card image cap">
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Address) 
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.Phone)
-                </td>
-
-                  <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-
-                  <td>
-                    @Html.DisplayFor(modelItem => item.Note)
-                </td>
-
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>               
                 <td class="align-middle text-center">
-                    <button type="button" class="btn btn-warning m-1 btn__edit--book" 
-                            onclick="showInPopup('@Url.Action("AddOrEditProduct","ProductManager",new { id= item.SupplierId },Context.Request.Scheme)','Sửa nhà cung cấp/thương hiệu mới')">
-                        <i class="far fa-edit"></i>
+                    <button type="button" class="btn btn-info text-white" 
+                            onclick="showInPopup('@Url.Action("AddOrEditSupplier","SupplierManager",new { id= item.SupplierId },Context.Request.Scheme)','Sửa thông tin')">
+                        <i class="fas fa-pencil-alt"></i>
                     </button>
-                    <form asp-action="Delete" asp-route-id="@item.SupplierId" onsubmit="return ajaxDeleteProduct(this);" class="d-inline">
-                    <button type="submit" class="btn btn-danger btn__delete--product">
+                    <form asp-action="Delete" asp-route-id="@item.SupplierId" onsubmit="return ajaxDelete(this);" class="d-inline">
+                    <button type="submit" class="btn btn-danger">
                         <i style="color:black;" class="far fa-trash-alt"></i>
                     </button>
                     </form>
                 </td>
-            </tr>}
-        </tbody>
-    </table>
-
-    </div>
-     }
+            </tr>
+        }
+    </tbody>
+</table>
+</div>

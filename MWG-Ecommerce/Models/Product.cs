@@ -30,13 +30,11 @@ namespace MWG_Ecommerce.Models
         public int SupplierId { get; set; }
         [Column("CategoryID")]
         public int CategoryId { get; set; }
-        [Column("DiscountID")]
-        public int? DiscountId { get; set; }
         [Required]
         [StringLength(150)]
         public string ProductName { get; set; }
         public string ProductDescription { get; set; }
-        [Column(TypeName = "decimal(18, 0)")]
+        [Column(TypeName = "decimal(18, 0)")]     
         public decimal Price { get; set; }
         [Required]
         [StringLength(150)]

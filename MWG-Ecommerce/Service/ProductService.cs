@@ -39,7 +39,12 @@ namespace MWG_Ecommerce.Service
             return productPaging;
         }
 
-        public Product FindProductById(long idProduct)
+        public List<Product> GetAllProduct()
+        {
+            return _context.Products.ToList();
+        }
+
+        public Product FindProductById(int idProduct)
         {
             return _context.Products.Find(idProduct);
         }

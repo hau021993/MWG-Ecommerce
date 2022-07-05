@@ -1,0 +1,77 @@
+﻿@model MWG_Ecommerce.Models.Discount
+@{
+    ViewData["Title"] = "AddDiscount";
+    Layout = null;
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AddOrEditDiscount" asp-route-id="@Model.DiscountId" onsubmit="return ajaxPost(this);" autocomplete="off">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="DiscountId" />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="DiscountContent" class="control-label">Nội dung khuyến mãi</label>
+                        <textarea asp-for="DiscountContent" required class="form-control"></textarea>
+                        <span asp-validation-for="DiscountContent" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="DiscountPrice" class="control-label">Giá giảm</label>
+                        <input asp-for="DiscountPrice" required type="number" min="0" class="form-control" />
+                        <span asp-validation-for="DiscountPrice" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Status" class="control-label">Trạng thái</label>
+                        <select asp-for="Status" class="form-control">
+                            <option value="True">Đang áp dụng</option>
+                            <option value="False">Không áp dụng</option>
+                        </select>
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="StartTime" class="control-label">Thời gian bắt đầu</label>
+                        <input asp-for="StartTime" required name="startday" min="2022-01-01" type="date" class="form-control" />
+                        <span asp-validation-for="StartTime" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="EndTime" class="control-label">Thời gian kết thúc</label>
+                        <input asp-for="EndTime" required name="endday" min="2022-01-01" type="date" class="form-control" />
+                        <span asp-validation-for="EndTime" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <input style="margin-left:180px; background-color:lightseagreen" type="submit" value="Thực hiện" class="btn btn-primary btn-block" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

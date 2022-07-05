@@ -22,6 +22,8 @@ namespace MWG_Ecommerce.Models
         public int Quantity { get; set; }
         public int? Discount { get; set; }
         public int Total { get; set; }
+        [StringLength(50)]
+        public string Status { get; set; }
 
         [ForeignKey(nameof(OrderId))]
         [InverseProperty("OrderDetails")]

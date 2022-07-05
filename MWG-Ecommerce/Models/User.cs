@@ -29,14 +29,17 @@ namespace MWG_Ecommerce.Models
         [Required]
         [StringLength(50)]
         public string Passwword { get; set; }
-        public bool? Sex { get; set; }
+        [StringLength(50)]
+        public string Sex { get; set; }
         [StringLength(50)]
         public string Address { get; set; }
         [StringLength(20)]
         public string Email { get; set; }
         [StringLength(10)]
         public string Phone { get; set; }
-        public bool Role { get; set; }
+        public bool Role { get; set; }      
+        [StringLength(10)]
+        public string Status { get; set; }
 
         [InverseProperty(nameof(LoginHistory.User))]
         public virtual ICollection<LoginHistory> LoginHistories { get; set; }
