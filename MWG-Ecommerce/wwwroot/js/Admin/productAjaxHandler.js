@@ -27,12 +27,14 @@ ajaxPostProduct = form => {
             success: function (res) {
                 if (res === "Thêm sản phẩm thành công!") {
                     window.location.reload();
+                    alert("Thao tác thành công")
                 } else {
                     $("#form-modal .modal-body").html(res);
                 }
 
             },
             error: function (er) {
+                alert("Thao tác thất bại")
                 //console.log(er.responseText);
             }
 
@@ -58,12 +60,14 @@ ajaxDeleteProduct = form => {
                 success: function (res) {
                     if (res === "Xóa sản phẩm thành công!") {
                         window.location.reload();
+                        alert("Xóa thành công")
                     } else {
                         alert(res)
                     }
 
                 },
                 error: function (er) {
+                    alert("Xóa thất bại")
                     //console.log(er.responseText);
                 }
 

@@ -9,6 +9,9 @@
 
 <p>
     <a onclick="generalShowInPopup('@Url.Action("AddAccount","AccountManager",null,Context.Request.Scheme)','Thêm tài khoản')" class="btn btn-success btn btn-success text-white"> <i class="fas fa-random"></i> Thêm tài khoản</a>
+    <a class="btn btn-primary text-white" asp-controller="AccountManager" asp-action="Index"> <i class="fas fa-arrows"></i> Tất cả</a>
+    <a class="btn btn-info text-white" asp-controller="AccountManager" asp-action="ShowUser"> <i class="fas fa-user"></i> Người dùng</a>
+    <a class="btn btn-warning" asp-controller="AccountManager" asp-action="ShowAdmin"> <i class="fas fa-anchor"></i> Quản trị viên</a>
 </p>
 
 <!-- TABLE VIEW -->

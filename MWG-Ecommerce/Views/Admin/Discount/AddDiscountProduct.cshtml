@@ -1,0 +1,47 @@
+﻿@model MWG_Ecommerce.Models.DiscountDetail
+@{
+    ViewData["Title"] = "AddDiscountProduct";
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AddDiscountProduct" asp-route-id="@Model.DiscountId" onsubmit="return ajaxPost(this);" autocomplete="off">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="DiscountId" />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="DiscountId" class="control-label">Nội dung khuyến mãi</label>
+                        <textarea asp-for="Discount.DiscountContent" class="form-control"></textarea>
+                        <span asp-validation-for="Discount.DiscountContent" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="ProductId" class="control-label">Tên sản phẩm</label>
+                        <select asp-for="ProductId" class ="form-control" asp-items="ViewBag.Product"></select>
+                        @*<div asp-for="ProductId">
+                            @Html.DropDownList("Product")
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <input style="margin-left:180px; background-color:lightseagreen" type="submit" value="Thực hiện" class="btn btn-primary btn-block" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

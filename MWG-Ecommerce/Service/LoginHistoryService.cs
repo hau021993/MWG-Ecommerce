@@ -63,7 +63,7 @@ namespace MWG_Ecommerce.Service
                 return true;
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

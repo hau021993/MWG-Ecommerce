@@ -1,0 +1,75 @@
+﻿@model MWG_Ecommerce.Models.Discount
+
+@{
+    ViewData["Title"] = "ListOfDiscountProduct";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 style="text-align:center">Danh sách sản phẩm được khuyến mãi</h1>
+
+<p>
+    <a class="btn btn-success btn btn-success text-white" asp-controller="DiscountManager" asp-action="Index"> <i class="fa fa-reply"></i> Quay trở lại</a>
+</p>
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="ListOfDiscountProduct" asp-route-id="@Model.DiscountId">
+        <div class="table-responsive rounded-top rounded-bottom">
+    <table style="text-align:center" class="table table-bordered" id="myTable">
+        <thead>
+            <tr class="table-warning">              
+                <th style=" width:15%" scope="col">
+                   Tên sản phẩm 
+                </th>          
+                <th style=" width:15%" scope="col">
+                   Giá sản phẩm
+                </th> 
+                <th style=" width:15%" scope="col">
+                   Giá giảm
+                </th> 
+                <th style=" width:15%" scope="col">
+                   Giá sau khi giảm
+                </th>
+                <th class="align-middle" style=" width:5%;" scope="col">Hoạt động</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.DiscountDetails)
+        {
+            <script>
+                var a = @Html.DisplayFor(modelItem => item.Product.Price)
+                var b = @Html.DisplayFor(modelItem => item.Discount.DiscountPrice)
+                var c = a - b;
+            </script>
+            <tr>
+                <td>
+                   @* @Html.DisplayFor(modelItem => item.DiscountId)*@
+                    @Html.DisplayFor(modelItem => item.Product.ProductName)
+                </td>
+                <td>
+                   @* @Html.DisplayFor(modelItem => item.Discount.DiscountContent)*@
+                    @String.Format("{0:0,0}", item.Product.Price) VND
+                </td>  
+                <td>
+                    @String.Format("{0:0,0}", item.Discount.DiscountPrice) VND                
+                </td>    
+                <td>
+                    @*@Html.DisplayFor(modelItem => (item.Product.Price)(item.Discount.DiscountPrice))*@
+                </td>    
+                <td>
+                    <form asp-action="DeleteDiscountProduct" asp-route-id="@item.DiscountId" onsubmit="return ajaxDelete(this);" class="d-inline">
+                        <button type="submit" class="btn btn-danger">
+                            <i style="color:black;" class="far fa-trash-alt"></i>
+                        </button>
+                    </form>
+                </td>    
+
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+
+        </form>
+    </div>
+</div>

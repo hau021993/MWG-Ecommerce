@@ -18,9 +18,19 @@ namespace MWG_Ecommerce.Service
             _context = context;
         }
 
-        public List<User> GetAllUser()
+        public List<User> GetAllAccount()
         {
             return _context.Users.Where(a => a.Status == "Offline" || a.Status == null).ToList();
+        }
+
+        public List<User> GetAllUser()
+        {
+            return _context.Users.Where(a => a.Role == false).ToList();
+        }
+
+        public List<User> GetAllAdmin()
+        {
+            return _context.Users.Where(a => a.Role == true && (a.Status == "Offline" || a.Status == null)).ToList();
         }
 
         public User FindUserById(int idUser)

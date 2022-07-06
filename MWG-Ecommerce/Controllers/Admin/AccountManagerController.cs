@@ -32,7 +32,19 @@ namespace MWG_Ecommerce.Controllers.Admin
         public IActionResult Index()
         {
             ViewData["Account"] = "active";
+            return View("/Views/Admin/Account/AccountManager.cshtml", accountService.GetAllAccount());
+        }
+
+        public IActionResult ShowUser()
+        {
+            //ViewData["Account"] = "active";
             return View("/Views/Admin/Account/AccountManager.cshtml", accountService.GetAllUser());
+        }
+
+        public IActionResult ShowAdmin()
+        {
+            //ViewData["Account"] = "active";
+            return View("/Views/Admin/Account/AccountManager.cshtml", accountService.GetAllAdmin());
         }
 
         public ActionResult AddAccount(int id = 0)
@@ -150,63 +162,45 @@ namespace MWG_Ecommerce.Controllers.Admin
             return View("/Views/Admin/Account/MyInfoDetail.cshtml", account);           
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> EditMyInfo(int idSession, User account)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            await accountService.UpdateUser(account);
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (accountService.FindUserById(idSession) == null)
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return View("/Views/Admin/Category/EditMyInfo.cshtml", account);
-        //    }
-        //}
+        public ActionResult EditMyInfo(int idSession)
+        {
+            idSession = (int)HttpContext.Session.GetInt32("id");
+            var account = accountService.FindUserById(idSession);
+            if (account == null)
+            {
+                return NotFound();
+            }
+            return View("/Views/Admin/Account/EditMyInfo.cshtml", account);
+        }
 
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> EditMyAccount(int id, User account)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-
-        //        try
-        //            {
-        //                await accountService.UpdateUser(account);
-        //            }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (accountService.FindUserById(id) == null)
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }                             
-        //    }
-        //    else
-        //    {
-        //        return View("/Views/Admin/Category/EditMyAccount.cshtml", account);
-        //    }
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditMyInfo(int idSession, User account)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await accountService.UpdateUser(account);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (accountService.FindUserById(idSession) == null)
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return Ok("Sửa thành công!");
+            }
+            else
+            {
+                return View("/Views/Admin/Account/EditMyInfo.cshtml", account);
+            }
+        }       
 
     }
 }

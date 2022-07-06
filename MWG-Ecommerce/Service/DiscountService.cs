@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MWG_Ecommerce.Service
 {
@@ -23,10 +24,20 @@ namespace MWG_Ecommerce.Service
             return _context.Discounts.ToList();
         }
 
+        public List<Discount> GetAllTrueDiscount()
+        {
+            return _context.Discounts.Where(a => a.Status == true).ToList();
+        }
+
+        public List<Discount> GetAllFalseDiscount()
+        {
+            return _context.Discounts.Where(a => a.Status == false).ToList();
+        }
+
         public Discount FindDiscountById(int idDiscount)
         {
             return _context.Discounts.Find(idDiscount);
-        }
+        }      
 
         public async Task<bool> AddDiscount(Discount discount)
         {

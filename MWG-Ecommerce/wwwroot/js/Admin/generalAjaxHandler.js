@@ -10,6 +10,7 @@ generalShowInPopup = (url, title) => {
         },
         error: function (er) {
             console.log(er.responseText);
+            alert("Wrong")
         }
     })
 }
@@ -26,12 +27,17 @@ ajaxPost = form => {
             success: function (res) {
                 if (res === "Thêm thành công!") {
                     window.location.reload();
+                    alert("Thao tác thành công")
+                } else if (res === "Sửa thành công!") { 
+                    window.location.reload();
+                    alert("Thao tác thành công")
                 } else {
-                    $("#form-modal .modal-body").html(res);
+                    $("#form-modal .modal-body").html(res);                   
                 }
 
             },
             error: function (er) {
+                alert("Thao tác thất bại")
                 //console.log(er.responseText);
             }
 
@@ -55,12 +61,14 @@ ajaxDelete = form => {
                 success: function (res) {
                     if (res === "Xóa đối tượng thành công!") {
                         window.location.reload();
+                        alert("Xóa thành công")
                     } else {
                         alert(res)
                     }
 
                 },
                 error: function (er) {
+                    alert("Xóa thất bại")
                     //console.log(er.responseText);
                 }
 

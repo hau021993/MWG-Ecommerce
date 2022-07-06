@@ -9,6 +9,9 @@
 
 <p>
     <a onclick="generalShowInPopup('@Url.Action("AddOrEditDiscount","DiscountManager",null,Context.Request.Scheme)','Thêm khuyến mãi')" class="btn btn-success btn btn-success text-white"> <i class="fas fa-random"></i> Thêm khuyến mãi</a>
+    <a class="btn btn-primary text-white" asp-controller="DiscountManager" asp-action="Index"> <i class="fas fa-arrows"></i> Tất cả</a>
+    <a class="btn btn-info text-white" asp-controller="DiscountManager" asp-action="ShowTrueDiscount"> <i class="fa-solid fa-table-list"></i> Đang áp dụng</a>
+    <a class="btn btn-warning" asp-controller="DiscountManager" asp-action="ShowFalseDiscount"> <i class="fa-solid fa-table-list"></></i> Không áp dụng</a>
 </p>
 
 
@@ -49,15 +52,24 @@
                     @String.Format("{0:0,0}", item.DiscountPrice) VND
                 </td>  
                  <td>
+                     @*@Html.DisplayFor(modelItem => item.StartTime)*@
                     @String.Format("{0:dd/MM/yyyy}", item.StartTime)
                 </td>  
                  <td>
+                     @*@Html.DisplayFor(modelItem => item.EndTime)*@
                     @String.Format("{0:dd/MM/yyyy}", item.EndTime)
                 </td>  
                 <td class="align-middle text-center">
                     <button type="button" class="btn btn-info text-white" 
                             onclick="showInPopup('@Url.Action("AddOrEditDiscount","DiscountManager",new { id= item.DiscountId },Context.Request.Scheme)','Sửa thông tin')">
                         <i class="fas fa-pencil-alt"></i>
+                    </button>
+                     <a class="btn btn-success text-white" asp-controller="DiscountManager" asp-action="ListOfDiscountProduct" asp-route-id="@item.DiscountId">
+                        <i class="fas fa-list"></i>
+                    </a>
+                     <button type="button" class="btn btn-primary text-white" 
+                            onclick="showInPopup('@Url.Action("AddDiscountProduct","DiscountManager",new { id= item.DiscountId },Context.Request.Scheme)','Thêm sản phẩm khuyến mãi')">
+                        <i class="fa fa-plus-circle"></i>
                     </button>
                     <form asp-action="Delete" asp-route-id="@item.DiscountId" onsubmit="return ajaxDelete(this);" class="d-inline">
                     <button type="submit" class="btn btn-danger">
