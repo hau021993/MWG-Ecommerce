@@ -25,10 +25,32 @@ namespace MWG_Ecommerce.Controllers.Admin
             sizeService = new SizeService(context);
         }
 
-        public IActionResult Index()
+        public async Task <IActionResult> Index([FromQuery(Name = "p")] int currentPage, int pagesize)
         {
+            var sizes = _context.Sizes.OrderBy(s => s.Size1);
+            int totalSizes = await sizes.CountAsync();
+            int countPages = (int)Math.Ceiling((double)totalSizes / pagesize);
+            if(currentPage > countPages) currentPage = countPages;
+            if(countPages < 1) currentPage = 1;
+
+            var pagingModel = new PagingModel()
+            {
+                countpages = countPages, 
+                currentpage = currentPage,
+                generateUrl = (pageNumber) => Url.Action("Index", new
+                {
+                    p = pageNumber,
+                    pagesize = pagesize
+                })
+            };
+
+            ViewBag.pagingModel = pagingModel;
+            ViewBag.totalSizes = totalSizes;
+
+            var sizesInPage = await sizes.Skip((currentPage - 1) * pagesize)
+                              .Take(pagesize).ToListAsync();
             ViewData["Size"] = "active";
-            return View("/Views/Admin/Size/SizeManager.cshtml", sizeService.GetAllSize());
+            return View("/Views/Admin/Size/SizeManager.cshtml", sizesInPage);
         }
 
         public ActionResult AddOrEditSize(int id = 0)

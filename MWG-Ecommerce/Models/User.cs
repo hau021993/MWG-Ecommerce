@@ -37,7 +37,7 @@ namespace MWG_Ecommerce.Models
         public string Email { get; set; }
         [StringLength(10)]
         public string Phone { get; set; }
-        public bool Role { get; set; }      
+        public bool Role { get; set; }
         [StringLength(10)]
         public string Status { get; set; }
 

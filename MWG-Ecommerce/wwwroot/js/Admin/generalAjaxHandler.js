@@ -31,6 +31,9 @@ ajaxPost = form => {
                 } else if (res === "Sửa thành công!") { 
                     window.location.reload();
                     alert("Thao tác thành công")
+                } else if (res === "Giá khuyến mãi lớn hơn giá sản phẩm!") {
+                    window.location.reload();
+                    alert("Thêm thất bại vì giá khuyến mãi lớn hơn giá sản phẩm")
                 } else {
                     $("#form-modal .modal-body").html(res);                   
                 }

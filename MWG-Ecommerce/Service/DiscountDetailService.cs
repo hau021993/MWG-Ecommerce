@@ -32,15 +32,17 @@ namespace MWG_Ecommerce.Service
                 .Where(m => m.DiscountId == idDiscount).ToList();
             return list;
         }
-
-        public DiscountDetail FindDiscountDetailById(int id)
+    
+        public DiscountDetail FindDiscountDetailById(int iddis, int idpro)
         {
-            return _context.DiscountDetails.Find(id);
+            return _context.DiscountDetails
+                .Include(d => d.Discount)
+                .Include(d => d.Product)
+                .FirstOrDefault(m => m.DiscountId == iddis && m.ProductId ==idpro);
         }
 
-        public async Task<bool> AddDiscountDetail(int idDiscount, DiscountDetail discountDetail)
+        public async Task<bool> AddDiscountDetail(DiscountDetail discountDetail)
         {
-            discountDetail.DiscountId = idDiscount;
             _context.Add(discountDetail);
             await _context.SaveChangesAsync();
             return true;
@@ -50,7 +52,7 @@ namespace MWG_Ecommerce.Service
         {
             try
             {
-                _context.Remove(discountDetail);
+                _context.DiscountDetails.Remove(discountDetail);
                 await _context.SaveChangesAsync();
                 return true;
 

@@ -21,6 +21,8 @@ namespace MWG_Ecommerce.Controllers.Admin
         private readonly DiscountService discountService;
         private readonly DiscountDetailService discountDetailService;
         private readonly ProductService productService;
+        //Product product = new Product();
+        //Discount discount = new Discount();
 
         public DiscountManagerController(ILogger<DiscountManagerController> logger, ShoppingonlineContext context)
         {
@@ -129,37 +131,43 @@ namespace MWG_Ecommerce.Controllers.Admin
 
         public IActionResult AddDiscountProduct()
         {
+            ViewData["Discount"] = new SelectList(discountService.GetAllTrueDiscount(), "DiscountId", "DiscountContent");
             ViewData["Product"] = new SelectList(_context.Products, "ProductId", "ProductName");
             return View("/Views/Admin/Discount/AddDiscountProduct.cshtml", new DiscountDetail());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddDiscountProduct(int idDiscount, DiscountDetail discountDetail)
+        public async Task<IActionResult> AddDiscountProduct(DiscountDetail discountDetail)
         {
-            if (idDiscount != discountDetail.ProductId)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                //int discount = discountService.FindDiscountById(idDiscount);
-                //await discountDetailService.AddDiscountDetail(discount, discountDetail);
-                discountDetail.DiscountId = idDiscount;
-                _context.Add(discountDetail);
-                await _context.SaveChangesAsync();
+                //if(discountDetail.Product.Price <= discountDetail.Discount.DiscountPrice)
+                //{
+                //    return BadRequest("Giá khuyến mãi lớn hơn giá sản phẩm!");
+                //}
+                //else
+                //{
+                //    await discountDetailService.AddDiscountDetail(discountDetail);
+                //    return Ok("Thêm thành công!");
+                //}
+                await discountDetailService.AddDiscountDetail(discountDetail);
+                return Ok("Thêm thành công!");
             }
-            ViewData["Product"] = new SelectList(_context.Products, "ProductId", "ProductName");
-            return View("/Views/Admin/Discount/AddDiscountProduct.cshtml", discountDetail);
+            else
+            {              
+                ViewData["Discount"] =   new SelectList(_context.Discounts, "DiscountId", "DiscountContent", discountDetail.DiscountId);
+                ViewData["Product"] = new SelectList(_context.Products, "ProductId", "ProductName", discountDetail.ProductId);
+                return View("/Views/Admin/Discount/AddDiscountProduct.cshtml", discountDetail);
+            }     
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteDiscountProduct(int id)
+        public async Task<IActionResult> DeleteDiscountProduct(int iddis, int idpro)
         {
-            var discount = discountDetailService.FindDiscountDetailById(id);
-            bool isDelete = await discountDetailService.DeleteDiscountProduct(discount);
+            var discountDetail = discountDetailService.FindDiscountDetailById(iddis, idpro);
+            bool isDelete = await discountDetailService.DeleteDiscountProduct(discountDetail);
             if (isDelete)
             {
                 return Ok("Xóa đối tượng thành công!");

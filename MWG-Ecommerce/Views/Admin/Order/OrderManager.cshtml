@@ -1,0 +1,79 @@
+﻿@model IEnumerable<MWG_Ecommerce.Models.Order>
+
+@{
+    ViewData["Title"] = "OrderManager";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 style="text-align:center">Quản lí đơn hàng</h1>
+
+<p>
+    <a class="btn btn-primary text-white" asp-controller="OrderManager" asp-action="Index"> <i class="fas fa-arrows"></i> Tất cả đơn hàng</a>
+    <a class="btn btn-info text-white" asp-controller="OrderManager" asp-action="ShowOrderType_1"> <i class="fa-solid fa-table-list"></i> Đang xử lí</a>
+    <a class="btn btn-warning" asp-controller="OrderManager" asp-action="ShowOrderType_2"> <i class="fa-solid fa-table-list"></></i> Đang giao hàng</a>
+    <a class="btn btn-success text-white" asp-controller="OrderManager" asp-action="ShowOrderType_3"> <i class="fa-solid fa-table-list"></i> Đã giao hàng</a>
+    <a class="btn btn-dark" asp-controller="OrderManager" asp-action="ShowOrderType_4"> <i class="fa-solid fa-table-list"></></i> Đã hủy</a>
+</p>
+
+
+<!-- TABLE VIEW --> 
+<div class="table-responsive rounded-top rounded-bottom">
+    <table style="text-align:center" class="table table-bordered" id="myTable">
+        <thead>
+            <tr class="table-warning">
+                <th style=" width:5%" scope="col">
+                   Mã số
+                </th>
+                <th style=" width:10%" scope="col">
+                    Tên tài khoản
+                </th>                       
+                <th style=" width:10%" scope="col">
+                    Kiểu thanh toán
+                </th>   
+                <th style=" width:10%" scope="col">
+                    Ngày đặt hàng
+                </th>
+                <th style=" width:10%" scope="col">
+                    Ngày giao hàng 
+                </th>
+                <th class="align-middle" style=" width:15%;" scope="col">Hoạt động</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Username)
+                </td>  
+                <td>
+                    @Html.DisplayFor(modelItem => item.Payment.PaymentType)
+                </td>    
+                 <td>                    
+                    @String.Format("{0:dd/MM/yyyy}", item.OrderDate)
+                </td>  
+                 <td>                 
+                    @String.Format("{0:dd/MM/yyyy}", item.ShipDate)
+                </td>  
+                <td class="align-middle text-center">
+                    <button type="button" class="btn btn-info text-white" 
+                            onclick="showInPopup('@Url.Action("EditOrder","OrderManager",new { id= item.OrderId },Context.Request.Scheme)','Sửa trạng thái đơn hàng')">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <a type="button" class="btn btn-info text-white" asp-controller="OrderManager" asp-action="ShowOrderDetail" asp-route-id="@item.OrderId">                           
+                        <i class="fas fa-list"></i>
+                    </a>                             
+                    <form asp-action="Delete" asp-route-id="@item.OrderId" onsubmit="return ajaxDelete(this);" class="d-inline">
+                    <button type="submit" class="btn btn-danger">
+                        <i style="color:black;" class="far fa-trash-alt"></i>
+                    </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>

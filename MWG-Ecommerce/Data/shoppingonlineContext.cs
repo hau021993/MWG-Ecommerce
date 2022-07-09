@@ -107,6 +107,9 @@ namespace MWG_Ecommerce.Data
 
             modelBuilder.Entity<OrderDetail>(entity =>
             {
+                entity.HasKey(e => new { e.OrderId, e.ProductId })
+                    .HasName("PK_OrderDetails_1");
+
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderDetails)
                     .HasForeignKey(d => d.OrderId)
@@ -170,6 +173,10 @@ namespace MWG_Ecommerce.Data
                 entity.Property(e => e.Passwword).IsFixedLength(true);
 
                 entity.Property(e => e.Phone).IsFixedLength(true);
+
+                entity.Property(e => e.Status)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
 
                 entity.Property(e => e.Username).IsFixedLength(true);
             });

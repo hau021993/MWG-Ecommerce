@@ -1,0 +1,70 @@
+﻿@model MWG_Ecommerce.Models.Order
+
+@{
+    ViewData["Title"] = "ShowOrderDetail";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 style="text-align:center">Chi tiết đơn hàng</h1>
+
+<p>
+    <a class="btn btn-success btn btn-success text-white" asp-controller="OrderManager" asp-action="Index"> <i class="fa fa-reply"></i> Quay trở lại</a>
+</p>
+
+ <div class="table-responsive rounded-top rounded-bottom">
+    <table style="text-align:center" class="table table-bordered" id="myTable">
+        <thead>
+            <tr class="table-warning">
+                <th style=" width:5%" scope="col">
+                   Mã đơn hàng 
+                </th>
+                <th style=" width:15%" scope="col">
+                   Tên sản phẩm
+                </th>          
+                <th style=" width:15%" scope="col">Hình ảnh</th>
+                <th style=" width:10%" scope="col">
+                   Đơn giá 
+                </th> 
+                 <th style=" width:5%" scope="col">
+                   Số lượng đặt 
+                </th>
+                 <th style=" width:10%" scope="col">
+                   Khuyến mãi 
+                </th> 
+                 <th style=" width:10%" scope="col">
+                   Tổng tiền 
+                </th> 
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.OrderDetails)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.ProductName)
+                </td>  
+                <td class="align-middle text-center">
+                    <img style="height:120px;width:auto;" class="card-img-top " src=@item.Product.Picture
+                         alt="Card image cap">
+                </td>
+                <td>
+                    @String.Format("{0:0,0}", item.Price) VND
+                </td> 
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td> 
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiscountId)
+                </td>  
+                <td>
+                    @String.Format("{0:0,0}", item.Total) VND
+                </td> 
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+ 

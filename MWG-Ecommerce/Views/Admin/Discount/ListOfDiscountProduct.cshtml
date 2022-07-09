@@ -54,13 +54,15 @@
                     @String.Format("{0:0,0}", item.Discount.DiscountPrice) VND                
                 </td>    
                 <td>
-                    @*@Html.DisplayFor(modelItem => (item.Product.Price)(item.Discount.DiscountPrice))*@
+                    
+                    @String.Format("{0:0,0}", item.Product.Price-item.Discount.DiscountPrice) VND
+                    @*@Html.DisplayFor(modelItem => (item.Product.Price - item.Discount.DiscountPrice))*@
                 </td>    
                 <td>
-                    <form asp-action="DeleteDiscountProduct" asp-route-id="@item.DiscountId" onsubmit="return ajaxDelete(this);" class="d-inline">
-                        <button type="submit" class="btn btn-danger">
-                            <i style="color:black;" class="far fa-trash-alt"></i>
-                        </button>
+                     <form asp-action="DeleteDiscountProduct" asp-route-iddis="@item.DiscountId" asp-route-idpro="@item.ProductId" onsubmit="return ajaxDelete(this);" class="d-inline">
+                    <button type="submit" class="btn btn-danger">
+                        <i style="color:black;" class="far fa-trash-alt"></i>
+                    </button>
                     </form>
                 </td>    
 

@@ -11,19 +11,17 @@ namespace MWG_Ecommerce.Models
     public partial class OrderDetail
     {
         [Key]
-        [Column("OrderDetailID")]
-        public int OrderDetailId { get; set; }
         [Column("OrderID")]
         public int OrderId { get; set; }
+        [Key]
         [Column("ProductID")]
         public int ProductId { get; set; }
         [Column(TypeName = "decimal(18, 0)")]
         public decimal Price { get; set; }
         public int Quantity { get; set; }
-        public int? Discount { get; set; }
+        [Column("DiscountID")]
+        public int? DiscountId { get; set; }
         public int Total { get; set; }
-        [StringLength(50)]
-        public string Status { get; set; }
 
         [ForeignKey(nameof(OrderId))]
         [InverseProperty("OrderDetails")]

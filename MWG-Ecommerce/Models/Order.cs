@@ -26,6 +26,9 @@ namespace MWG_Ecommerce.Models
         public DateTime OrderDate { get; set; }
         [Column(TypeName = "date")]
         public DateTime ShipDate { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string Status { get; set; }
 
         [ForeignKey(nameof(PaymentId))]
         [InverseProperty("Orders")]

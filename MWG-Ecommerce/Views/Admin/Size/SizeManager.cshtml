@@ -51,3 +51,15 @@
     </tbody>
 </table>
 </div>
+
+@{
+    var pagingmodel = new PagingModel()
+            {
+                currentpage = ViewBag.currentPage,
+                countpages = ViewBag.totalSizes,
+                generateUrl = (int? p) => Url.Action("Index", new { p = p })
+            };
+
+}
+
+<partial name="_Paging" model="@pagingmodel"/>
