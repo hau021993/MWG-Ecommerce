@@ -1,0 +1,102 @@
+﻿@model IEnumerable<MWG_Ecommerce.Models.Order>
+
+@{
+    ViewData["Title"] = "OrderReport";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 style="text-align:center">Thống kê theo hóa đơn</h1>
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="OrderReport" method="get" class="d-inline">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <input name="fromDate" required min="2022-01-01" type="date" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <a class="btn btn-info btn btn-success text-white"> Đến </a>                        
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <input name="toDate" required min="2022-01-01" type="date" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">
+                        <i style="color:black;" class="fas fa-clock"></i> Chọn mốc thời gian
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <br />
+
+         <div class="form-group">
+             <label class="btn btn-warning btn btn-success text-white" style="text-align:left">
+                 Số đơn đặt hàng trong khoảng thời gian đã chọn là @ViewData["GetCountOrderByDate"] đơn.
+                 Số người dùng đã thanh toán trong  khoảng thời gian đã chọn là @ViewData["GetCountUserByDate"] người.
+                 Tổng doanh thu trong khoảng thời gian đã chọn là @String.Format("{0:0,0}", @ViewData["GetTotalMoneyOrderByDate"]) VND. 
+                 Tổng doanh thu hiện có là @String.Format("{0:0,0}", @ViewData["GetAllTotalMoney"]) VND.
+             </label>                        
+         </div>
+
+        <br />
+
+    </div>
+</div>
+
+ <div class="table-responsive rounded-top rounded-bottom">
+    <table style="text-align:center" class="table table-bordered" id="myTable">
+        <thead>
+            <tr class="table-warning">
+                <th style=" width:10%" scope="col">
+                   Mã đơn hàng 
+                </th>
+                <th style=" width:10%" scope="col">
+                   Mã tài khoản 
+                </th>
+                <th style=" width:15%" scope="col">
+                   Tên đăng nhập 
+                </th>          
+                <th style=" width:15%" scope="col">
+                    Thời gian đặt 
+                </th>               
+                <th class="align-middle" style=" width:15%;" scope="col">Hoạt động</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model) 
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Username)
+                </td>  
+                <td>
+                   @String.Format("{0:dd/MM/yyyy}", item.OrderDate)                  
+                </td> 
+                <td class="align-middle text-center">
+                    <a type="button" class="btn btn-info text-white" asp-controller="OrderManager" asp-action="ShowOrderDetail" asp-route-id="@item.OrderId">                           
+                        <i class="fas fa-list"></i>
+                    </a>    
+                     <button type="button" class="btn btn-info text-white" 
+                            onclick="showInPopup('@Url.Action("AddAccount","AccountManager",new { id= item.UserId },Context.Request.Scheme)','Chi tiết tài khoản')">
+                        <i class="fa fa-info-circle"></i>
+                    </button>
+                </td>           
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

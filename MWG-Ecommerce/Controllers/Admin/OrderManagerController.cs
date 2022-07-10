@@ -117,6 +117,7 @@ namespace MWG_Ecommerce.Controllers.Admin
 
         public ActionResult ShowOrderDetail(int id)
         {
+            ViewData["TotalMoney"] = orderDetailService.TotalMoney(id);
             var orderDetail = orderService.FindOrderById(id);
             orderDetailService.GetAllOrderDetailByOrder(id);
             if (orderDetail == null)

@@ -1,0 +1,110 @@
+﻿@model IEnumerable<MWG_Ecommerce.Models.OrderDetail>
+
+@{
+    ViewData["Title"] = "ProductReport";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 style="text-align:center">Thống kê theo sản phẩm</h1>
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="ProductReport" method="get" class="d-inline">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <input name="fromDate" required min="2022-01-01" type="date" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <a class="btn btn-info btn btn-success text-white"> Đến </a>                        
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <input name="toDate" required min="2022-01-01" type="date" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">
+                        <i style="color:black;" class="fas fa-clock"></i> Chọn mốc thời gian
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <br />
+
+         <div class="form-group">
+             <label class="btn btn-warning btn btn-success text-white" style="text-align:left">    
+                 Tổng số sản phẩm được đặt trong khoảng thời gian đã chọn là @ViewData["GetCountProductByDate"] sản phẩm.
+                 Tổng số lượng sản phẩm được đặt trong khoảng thời gian đã chọn là @ViewData["GetSumQuanlityProductByDate"] sản phẩm.
+                 Tổng doanh thu trong khoảng thời gian đã chọn là @String.Format("{0:0,0}", @ViewData["GetTotalMoneyOrderByDate"]) VND. 
+                 Tổng số sản phẩm được đặt hiện có là @ViewData["GetAllCountProduct"] sản phẩm.
+                 Tổng số lượng sản phẩm được đặt hiện có là @ViewData["GetAllSumQuanlityProduct"] sản phẩm.
+                 Tổng doanh thu hiện có là @String.Format("{0:0,0}", @ViewData["GetAllTotalMoney"]) VND.
+             </label>                        
+         </div>
+
+        <br />
+
+    </div>
+</div>
+
+ <div class="table-responsive rounded-top rounded-bottom">
+    <table style="text-align:center" class="table table-bordered" id="myTable">
+        <thead>
+            <tr class="table-warning">
+                <th style=" width:10%" scope="col">
+                   Mã đơn hàng 
+                </th>
+                <th style=" width:10%" scope="col">
+                   Mã sản phẩm 
+                </th>
+                <th style=" width:15%" scope="col">
+                   Tên sản phẩm 
+                </th>          
+                <th style=" width:15%" scope="col">Hình ảnh</th>
+                <th style=" width:15%" scope="col">
+                    Thời gian đặt 
+                </th>               
+                <th class="align-middle" style=" width:15%;" scope="col">Hoạt động</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model) 
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.ProductName)
+                </td>  
+                <td class="align-middle text-center">
+                    <img style="height:120px;width:auto;" class="card-img-top " src=@item.Product.Picture
+                         alt="Card image cap">
+                </td>
+                <td>
+                   @String.Format("{0:dd/MM/yyyy}", item.Order.OrderDate)                  
+                </td> 
+                <td class="align-middle text-center">
+                    <a type="button" class="btn btn-info text-white" asp-controller="OrderManager" asp-action="ShowOrderDetail" asp-route-id="@item.OrderId">                           
+                        <i class="fas fa-list"></i>
+                    </a>
+                    <button type="button" class="btn btn-info text-white" 
+                            onclick="showInPopup('@Url.Action("DetailProduct","Report",new { id= item.ProductId },Context.Request.Scheme)','Chi tiết sản phẩm')">
+                        <i class="fa fa-info-circle"></i>
+                    </button>
+                    
+                </td>           
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

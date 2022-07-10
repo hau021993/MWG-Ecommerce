@@ -8,7 +8,8 @@
 <h1 style="text-align:center">Chi tiết đơn hàng</h1>
 
 <p>
-    <a class="btn btn-success btn btn-success text-white" asp-controller="OrderManager" asp-action="Index"> <i class="fa fa-reply"></i> Quay trở lại</a>
+    <a class="btn btn-success btn btn-success text-white" onclick="goBack()"> <i class="fa fa-reply"></i> Quay trở lại</a>
+    <a class="btn btn-info btn btn-success text-white">Tổng giá trị đơn hàng: @String.Format("{0:0,0}",@ViewData["TotalMoney"]) VND</a>
 </p>
 
  <div class="table-responsive rounded-top rounded-bottom">
@@ -61,10 +62,20 @@
                 </td>  
                 <td>
                     @String.Format("{0:0,0}", item.Total) VND
-                </td> 
+                </td>                
             </tr>
         }
         </tbody>
     </table>
+
+<T></T>
 </div>
+
+
+<script>
+      function goBack(){
+          window.history.back();
+      }
+  </script>
+
  

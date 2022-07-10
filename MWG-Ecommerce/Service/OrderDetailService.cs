@@ -55,5 +55,10 @@ namespace MWG_Ecommerce.Service
                 return false;
             }
         }
+
+        public int TotalMoney(int id)
+        {
+            return _context.OrderDetails.Where(o => o.OrderId == id).Sum(o => o.Total);
+        }
     }
 }

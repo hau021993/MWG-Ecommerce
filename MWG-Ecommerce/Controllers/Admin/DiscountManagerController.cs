@@ -142,17 +142,19 @@ namespace MWG_Ecommerce.Controllers.Admin
         {
             if (ModelState.IsValid)
             {
-                //if(discountDetail.Product.Price <= discountDetail.Discount.DiscountPrice)
-                //{
-                //    return BadRequest("Giá khuyến mãi lớn hơn giá sản phẩm!");
-                //}
-                //else
-                //{
-                //    await discountDetailService.AddDiscountDetail(discountDetail);
-                //    return Ok("Thêm thành công!");
-                //}
-                await discountDetailService.AddDiscountDetail(discountDetail);
-                return Ok("Thêm thành công!");
+                var discountPrice = discountService.FindDiscountById(discountDetail.DiscountId).DiscountPrice;
+                var productPrice = productService.FindProductById(discountDetail.ProductId).Price;
+                if (productPrice <= discountPrice)
+                {
+                    return Ok("Giá khuyến mãi lớn hơn giá sản phẩm!");
+                }
+                else
+                {
+                    await discountDetailService.AddDiscountDetail(discountDetail);
+                    return Ok("Thêm thành công!");
+                }
+                //await discountDetailService.AddDiscountDetail(discountDetail);
+                //return Ok("Thêm thành công!");
             }
             else
             {              

@@ -8,7 +8,7 @@
 <h1 style="text-align:center">Danh sách sản phẩm được khuyến mãi</h1>
 
 <p>
-    <a class="btn btn-success btn btn-success text-white" asp-controller="DiscountManager" asp-action="Index"> <i class="fa fa-reply"></i> Quay trở lại</a>
+    <a class="btn btn-success btn btn-success text-white" onclick="goBack()"> <i class="fa fa-reply"></i> Quay trở lại</a>
 </p>
 
 <div class="row">
@@ -75,3 +75,9 @@
         </form>
     </div>
 </div>
+
+<script>
+      function goBack(){
+          window.history.back();
+      }
+</script>

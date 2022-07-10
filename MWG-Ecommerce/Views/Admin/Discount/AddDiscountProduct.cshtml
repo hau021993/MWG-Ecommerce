@@ -9,6 +9,17 @@
     <div class="col-md-12">
         <form asp-action="AddDiscountProduct" onsubmit="return ajaxPost(this);" autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>            
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">* Lưu ý: Chỉ thêm được khuyến mãi đang được áp dụng.</label>                      
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">

@@ -475,3 +475,5 @@ D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\View
 D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Admin\Order\OrderManager.cshtml.g.cs
 D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Admin\Order\EditOrder.cshtml.g.cs
 D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Admin\Order\ShowOrderDetail.cshtml.g.cs
+D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Admin\Report\OrderReport.cshtml.g.cs
+D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Admin\Report\ProductReport.cshtml.g.cs

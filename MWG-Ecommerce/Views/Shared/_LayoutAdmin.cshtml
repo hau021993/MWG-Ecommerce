@@ -113,10 +113,9 @@
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link">Tổng số doanh thu</a>
-                                    <a class="nav-link">Tổng số đơn đặt hàng</a>
-                                    <a class="nav-link">Tổng số người dùng</a>
+                                <nav class="sb-sidenav-menu-nested nav">                                    
+                                    <a class="nav-link @ViewData["ProductReport"]" asp-controller="Report" asp-action="ProductReport">Theo sản phẩm</a>
+                                    <a class="nav-link @ViewData["OrderReport"]" asp-controller="Report" asp-action="OrderReport">Theo hóa đơn</a>
                                 </nav>
                             </div>
                       
