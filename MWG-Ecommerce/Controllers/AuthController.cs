@@ -44,6 +44,16 @@ namespace MWG_Ecommerce.Controllers
                 if (checkAdmin == false)
                 {
                     HttpContext.Session.SetString("role", "ROLE_USER");
+                    HttpContext.Session.SetInt32("id", user.UserId);
+                    int idSession = (int)HttpContext.Session.GetInt32("id");
+                    var status = _context.Users.Find(idSession);
+                    var savehistorylogin = new LoginHistory();
+                    savehistorylogin.UserId = idSession;
+                    savehistorylogin.Time = datetime;
+                    status.Status = "Online";
+                    _context.LoginHistories.Add(savehistorylogin);
+                    _context.SaveChanges();
+                    return Redirect(Url.Action("Index", "Home"));
                 }
                 else
                 {
@@ -59,7 +69,7 @@ namespace MWG_Ecommerce.Controllers
                     _context.SaveChanges();
                     return Redirect(Url.Action("Index", "Admin"));
                 }             
-                return Redirect(Url.Action("Index", "Admin"));
+                
             }
             else
             {

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MWG_Ecommerce.Service
 {
@@ -16,6 +17,27 @@ namespace MWG_Ecommerce.Service
         public SizeService(ShoppingonlineContext context)
         {
             _context = context;
+        }
+
+        public SizePagingDTO GetSizes(int currentPage)
+        {
+            int maxRows = 10;
+            var sizes = _context.Sizes.ToList();
+
+            SizePagingDTO sizePaging = new()
+            {
+                Sizes = sizes.OrderBy(s => s.SizeId)
+                        .Skip((currentPage - 1) * maxRows)
+                        .Take(maxRows).ToList()
+            };
+
+            double pageCount = (double)((decimal)sizes.Count / Convert.ToDecimal(maxRows));
+
+            sizePaging.PageCount = (int)Math.Ceiling(pageCount);
+
+            sizePaging.CurrentPageIndex = currentPage;
+
+            return sizePaging;
         }
 
         public List<Size> GetAllSize()

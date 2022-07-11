@@ -18,6 +18,11 @@ namespace MWG_Ecommerce.Controllers.Admin
         private readonly ILogger<SizeManagerController> _logger;
         private readonly ShoppingonlineContext _context;
         private readonly SizeService sizeService;
+        public const int ITEMS_PER_PAGE = 10;
+
+        [BindProperty(SupportsGet = true, Name = "p")]
+        public int currentPage { get; set; }
+        public int countPages { get; set; }
         public SizeManagerController(ILogger<SizeManagerController> logger, ShoppingonlineContext context)
         {
             _logger = logger;
@@ -25,33 +30,40 @@ namespace MWG_Ecommerce.Controllers.Admin
             sizeService = new SizeService(context);
         }
 
-        public async Task <IActionResult> Index([FromQuery(Name = "p")] int currentPage, int pagesize)
-        {
-            var sizes = _context.Sizes.OrderBy(s => s.Size1);
-            int totalSizes = await sizes.CountAsync();
-            int countPages = (int)Math.Ceiling((double)totalSizes / pagesize);
-            if(currentPage > countPages) currentPage = countPages;
-            if(countPages < 1) currentPage = 1;
+        //public async Task <IActionResult> Index([FromQuery(Name = "p")] int currentPage, int pagesize)
+        //{
+        //    var sizes = _context.Sizes.OrderBy(s => s.Size1);
+        //    int totalSizes = await sizes.CountAsync();
+        //    int countPages = (int)Math.Ceiling((double)totalSizes / pagesize);
+        //    if(currentPage > countPages) currentPage = countPages;
+        //    if(countPages < 1) currentPage = 1;
 
-            var pagingModel = new PagingModel()
-            {
-                countpages = countPages, 
-                currentpage = currentPage,
-                generateUrl = (pageNumber) => Url.Action("Index", new
-                {
-                    p = pageNumber,
-                    pagesize = pagesize
-                })
-            };
+        //    var pagingModel = new PagingModel()
+        //    {
+        //        countpages = countPages, 
+        //        currentpage = currentPage,
+        //        generateUrl = (pageNumber) => Url.Action("Index", new
+        //        {
+        //            p = pageNumber,
+        //            pagesize = pagesize
+        //        })
+        //    };
 
-            ViewBag.pagingModel = pagingModel;
-            ViewBag.totalSizes = totalSizes;
+        //    ViewBag.pagingModel = pagingModel;
+        //    ViewBag.totalSizes = totalSizes;
 
-            var sizesInPage = await sizes.Skip((currentPage - 1) * pagesize)
-                              .Take(pagesize).ToListAsync();
+        //    var sizesInPage = await sizes.Skip((currentPage - 1) * pagesize)
+        //                      .Take(pagesize).ToListAsync();
+        //    ViewData["Size"] = "active";
+        //    return View("/Views/Admin/Size/SizeManager.cshtml", sizesInPage);
+        //}
+
+        public IActionResult Index(int currentPageIndex = 1)
+        {            
             ViewData["Size"] = "active";
-            return View("/Views/Admin/Size/SizeManager.cshtml", sizesInPage);
+            return View("/Views/Admin/Size/SizeManager.cshtml", sizeService.GetSizes(currentPageIndex));
         }
+
 
         public ActionResult AddOrEditSize(int id = 0)
         {

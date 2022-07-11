@@ -1,8 +1,32 @@
-﻿@model MWG_Ecommerce.Models.User
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model MWG_Ecommerce.Models.User
 
 @{
     ViewData["Title"] = "MyAccountLoginHistory";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    @if(@HttpContextAccessor.HttpContext.Session.GetString("role") == "ROLE_ADMIN")
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        @section CategoryList
+        {
+            <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
+                <div class="navbar-nav w-100 overflow-hidden" style="height: 40px">                                            
+                    <select class="form-control" asp-items="ViewBag.CategoryList"></select>   
+                </div>
+            </nav>
+        }
+
+        @section SupplierList
+        {  
+            <select  class="form-control" asp-items="ViewBag.SupplierList"></select>   
+        }
+    }
+
 }
 
 <h1 style="text-align:center">Lịch sử đăng nhập</h1>

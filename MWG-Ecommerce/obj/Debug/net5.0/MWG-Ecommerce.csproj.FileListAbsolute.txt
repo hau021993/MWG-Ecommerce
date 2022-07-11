@@ -466,7 +466,6 @@ D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\View
 D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Admin\Account\EditMyInfo.cshtml.g.cs
 D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Admin\Discount\ListOfDiscountProduct.cshtml.g.cs
 D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Admin\Discount\AddDiscountProduct.cshtml.g.cs
-D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Shared\_Paging.cshtml.g.cs
 D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\DiscountDetails\Create.cshtml.g.cs
 D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\DiscountDetails\Delete.cshtml.g.cs
 D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\DiscountDetails\Details.cshtml.g.cs
@@ -477,3 +476,6 @@ D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\View
 D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Admin\Order\ShowOrderDetail.cshtml.g.cs
 D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Admin\Report\OrderReport.cshtml.g.cs
 D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Admin\Report\ProductReport.cshtml.g.cs
+D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Admin\Report\DetailProduct.cshtml.g.cs
+D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Shared\_PagingXTL.cshtml.g.cs
+D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Shared\_OldLayout.cshtml.g.cs

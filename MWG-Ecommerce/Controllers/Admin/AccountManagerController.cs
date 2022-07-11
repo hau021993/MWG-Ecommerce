@@ -129,6 +129,8 @@ namespace MWG_Ecommerce.Controllers.Admin
 
         public IActionResult MyAccountLoginHistory(int idSession)
         {
+            ViewData["CategoryList"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
+            ViewData["SupplierList"] = new SelectList(_context.Suppliers, "SupplierId", "CompanyName");
             idSession = (int)HttpContext.Session.GetInt32("id");
             var account = accountService.FindUserById(idSession);
             loginHistoryService.GetAllLoginHistoryByIdUser(idSession);
@@ -153,6 +155,8 @@ namespace MWG_Ecommerce.Controllers.Admin
 
         public ActionResult MyInfoDetail(int idSession)
         {
+            ViewData["CategoryList"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
+            ViewData["SupplierList"] = new SelectList(_context.Suppliers, "SupplierId", "CompanyName");
             idSession = (int)HttpContext.Session.GetInt32("id");
             var account = accountService.FindUserById(idSession);
             if (account == null)

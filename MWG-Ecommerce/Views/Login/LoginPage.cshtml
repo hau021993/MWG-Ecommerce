@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
     ViewData["Title"] = "Login";
     var mes = TempData["ThongBao"] as string;
     Layout = null;
@@ -69,11 +72,11 @@
                                         </div>
                                         <hr>
                                         <div class="form-group">
-                                            <input type="submit" value="Đăng nhập với tài khoản Google" class="btn btn-facebook btn-user btn-block" id="" href="#">
+                                            <input type="submit" value="Đăng nhập với tài khoản khác" class="btn btn-facebook btn-user btn-block" id="" href="#">
                                         </div>       
                                         <hr>
                                         <div class="form-group">
-                                            <input type="submit" value="Đăng nhập với tài khoản Facebook" class="btn btn-facebook btn-user btn-block" id="" href="#">
+                                            <input type="submit" value="Đến trang chủ" class="btn btn-facebook btn-user btn-block" id="" asp-controller="Home" asp-action="Index">
                                         </div>                             
                                     }
                                     <hr>

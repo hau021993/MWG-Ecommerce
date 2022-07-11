@@ -1,4 +1,6 @@
-﻿@model MWG_Ecommerce.Models.User
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model MWG_Ecommerce.Models.User
 @{
     ViewData["Title"] = "AddAccount";
     Layout = null;
@@ -85,21 +87,35 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                     <div class="form-group">
-                        <label asp-for="Role" class="control-label">Vai trò</label>
-                        <select asp-for="Role" class="form-control">
-                            <option value="True">Quản trị viên</option>
-                            <option value="False">Người dùng</option>                           
-                            </select>
-                        <span asp-validation-for="Role" class="text-danger"></span>
-                    </div>
+                    @if(@HttpContextAccessor.HttpContext.Session.GetString("role") == "ROLE_ADMIN")
+                    {
+                        <div class="form-group">
+                            <label asp-for="Role" class="control-label">Vai trò</label>
+                            <select asp-for="Role" class="form-control">
+                                <option value="True">Quản trị viên</option>
+                                <option value="False">Người dùng</option>                           
+                                </select>
+                            <span asp-validation-for="Role" class="text-danger"></span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            <label asp-for="Role" class="control-label">Vai trò</label>
+                            <select asp-for="Role" class="form-control">                                
+                                <option value="False">Người dùng</option>                           
+                                </select>
+                            <span asp-validation-for="Role" class="text-danger"></span>
+                        </div>
+                    }
+
                 </div>
             </div>
 
             <br />
 
             <div class="form-group">
-                <input style="margin-left:180px; background-color:lightseagreen" type="submit" value="Thực hiện" class="btn btn-primary btn-block" />
+                <input style="text-align:center; background-color:lightseagreen" type="submit" value="Thực hiện" class="btn btn-primary btn-block" />
             </div>
         </form>
     </div>

@@ -1,8 +1,25 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section CategoryList
+{
+    <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
+        <div class="navbar-nav w-100 overflow-hidden" style="height: 40px">                                            
+            <select class="form-control" asp-items="ViewBag.CategoryList"></select>   
+        </div>
+    </nav>
+}
+
+@section SupplierList
+{  
+    <select  class="form-control" asp-items="ViewBag.SupplierList"></select>   
+}
+
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
