@@ -1,8 +1,42 @@
-﻿@model MWG_Ecommerce.Models.Order
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model MWG_Ecommerce.Models.Order
 
 @{
     ViewData["Title"] = "ShowOrderDetail";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+     @if(@HttpContextAccessor.HttpContext.Session.GetString("role") == "ROLE_ADMIN")
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        @section CategoryList
+        {   
+           <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
+               <div class="navbar-nav w-100 overflow-hidden" style="height: 310px">      
+                    @foreach(var item in ViewBag.CategoryList)
+                    {
+                        <a href="" class="nav-item nav-link">@item.CategoryName</a>
+                    }                                 
+               </div>
+           </nav>
+        }
+
+        @section SupplierList
+        {  
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Thương hiệu</a>
+                    <div class="dropdown-menu rounded-0 m-0">
+                    @foreach(var item in ViewBag.SupplierList)
+                    {
+                        <a href="#" class="dropdown-item">@item.CompanyName</a>
+                    }            
+                    </div>
+            </div>  
+        }
+    }
 }
 
 <h1 style="text-align:center">Chi tiết đơn hàng</h1>

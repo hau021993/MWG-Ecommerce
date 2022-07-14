@@ -70,5 +70,50 @@ namespace MWG_Ecommerce.Service
                 return false;
             }
         }
+
+        public List<Order> ShowAllOrderForUser(int id)
+        {
+            return _context.Orders
+                .Include(o => o.User)
+                .Include(o => o.Payment)
+                .Where(o => o.UserId == id)
+                .ToList();
+        }
+
+        public List<Order> GetAllOrderForUserType_1(int id)
+        {
+            return _context.Orders
+                .Include(o => o.User)
+                .Include(o => o.Payment)
+                .Where(o => o.Status == "Đang xử lí" && o.UserId == id)
+                .ToList();
+        }
+
+        public List<Order> GetAllOrderForUserType_2(int id)
+        {
+            return _context.Orders
+                .Include(o => o.User)
+                .Include(o => o.Payment)
+                .Where(o => o.Status == "Đang giao hàng" && o.UserId == id)
+                .ToList();
+        }
+
+        public List<Order> GetAllOrderForUserType_3(int id)
+        {
+            return _context.Orders
+                .Include(o => o.User)
+                .Include(o => o.Payment)
+                .Where(o => o.Status == "Đã giao hàng" && o.UserId == id)
+                .ToList();
+        }
+
+        public List<Order> GetAllOrderForUserType_4(int id)
+        {
+            return _context.Orders
+                .Include(o => o.User)
+                .Include(o => o.Payment)
+                .Where(o => o.Status == "Đã hủy" && o.UserId == id)
+                .ToList();
+        }
     }
 }

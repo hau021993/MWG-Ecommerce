@@ -18,20 +18,33 @@ namespace MWG_Ecommerce.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ShoppingonlineContext _context;
         private readonly HomeService homeService;
+        private readonly ProductService productService;
+        private readonly CategoryService categoryService;
+        private readonly SupplierService supplierService;
 
         public HomeController(ILogger<HomeController> logger, ShoppingonlineContext context)
         {
             _logger = logger;
             _context = context;
             homeService = new HomeService(context);
+            productService = new ProductService(context);
+            categoryService = new CategoryService(context);
+            supplierService = new SupplierService(context);
         }
 
         public IActionResult Index()
         {
-            ViewData["CategoryList"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
-            ViewData["SupplierList"] = new SelectList(_context.Suppliers, "SupplierId", "CompanyName");
+            ViewData["CategoryList"] = categoryService.GetAllCategories();
+            ViewData["SupplierList"] = supplierService.GetAllSupplier();
+            ViewData["CountProduct_1"] = productService.CountProductOfCategory_1();
+            ViewData["CountProduct_2"] = productService.CountProductOfCategory_2();
+            ViewData["CountProduct_3"] = productService.CountProductOfCategory_3();
+            ViewData["CountProduct_4"] = productService.CountProductOfCategory_4();
+            ViewData["CountProduct_5"] = productService.CountProductOfCategory_5();
+            ViewData["CountProduct_6"] = productService.CountProductOfCategory_6();
+                 
             //HttpContext.Session.SetInt32("id", 2);
-            return View();
+            return View(productService.GetTop10ProductView());
         }
 
         public IActionResult Privacy()

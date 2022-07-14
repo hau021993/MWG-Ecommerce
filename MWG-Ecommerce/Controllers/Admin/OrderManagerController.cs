@@ -20,6 +20,8 @@ namespace MWG_Ecommerce.Controllers.Admin
         private readonly ShoppingonlineContext _context;
         private readonly OrderService orderService;
         private readonly OrderDetailService orderDetailService;
+        private readonly CategoryService categoryService;
+        private readonly SupplierService supplierService;
 
         public OrderManagerController(ILogger<DiscountManagerController> logger, ShoppingonlineContext context)
         {
@@ -27,6 +29,8 @@ namespace MWG_Ecommerce.Controllers.Admin
             _context = context;
             orderService = new OrderService(context);
             orderDetailService = new OrderDetailService(context);
+            categoryService = new CategoryService(context);
+            supplierService = new SupplierService(context);
         }
 
         public IActionResult Index()
@@ -117,6 +121,8 @@ namespace MWG_Ecommerce.Controllers.Admin
 
         public ActionResult ShowOrderDetail(int id)
         {
+            ViewData["CategoryList"] = categoryService.GetAllCategories();
+            ViewData["SupplierList"] = supplierService.GetAllSupplier();
             ViewData["TotalMoney"] = orderDetailService.TotalMoney(id);
             var orderDetail = orderService.FindOrderById(id);
             orderDetailService.GetAllOrderDetailByOrder(id);
@@ -125,6 +131,46 @@ namespace MWG_Ecommerce.Controllers.Admin
                 return NotFound();
             }          
             return View("/Views/Admin/Order/ShowOrderDetail.cshtml", orderDetail);
+        }
+
+        public IActionResult ShowAllOrderForUser(int id)
+        {
+            ViewData["CategoryList"] = categoryService.GetAllCategories();
+            ViewData["SupplierList"] = supplierService.GetAllSupplier();
+            id = (int)HttpContext.Session.GetInt32("id");
+            return View("/Views/Admin/Order/OrderManager.cshtml", orderService.ShowAllOrderForUser(id));
+        }
+
+        public IActionResult ShowOrderForUserType_1(int id)
+        {
+            ViewData["CategoryList"] = categoryService.GetAllCategories();
+            ViewData["SupplierList"] = supplierService.GetAllSupplier();
+            id = (int)HttpContext.Session.GetInt32("id");
+            return View("/Views/Admin/Order/OrderManager.cshtml", orderService.GetAllOrderForUserType_1(id));
+        }
+
+        public IActionResult ShowOrderForUserType_2(int id)
+        {
+            ViewData["CategoryList"] = categoryService.GetAllCategories();
+            ViewData["SupplierList"] = supplierService.GetAllSupplier();
+            id = (int)HttpContext.Session.GetInt32("id");
+            return View("/Views/Admin/Order/OrderManager.cshtml", orderService.GetAllOrderForUserType_2(id));
+        }
+
+        public IActionResult ShowOrderForUserType_3(int id)
+        {
+            ViewData["CategoryList"] = categoryService.GetAllCategories();
+            ViewData["SupplierList"] = supplierService.GetAllSupplier();
+            id = (int)HttpContext.Session.GetInt32("id");
+            return View("/Views/Admin/Order/OrderManager.cshtml", orderService.GetAllOrderForUserType_3(id));
+        }
+
+        public IActionResult ShowOrderForUserType_4(int id)
+        {
+            ViewData["CategoryList"] = categoryService.GetAllCategories();
+            ViewData["SupplierList"] = supplierService.GetAllSupplier();
+            id = (int)HttpContext.Session.GetInt32("id");
+            return View("/Views/Admin/Order/OrderManager.cshtml", orderService.GetAllOrderForUserType_4(id));
         }
     }
 }

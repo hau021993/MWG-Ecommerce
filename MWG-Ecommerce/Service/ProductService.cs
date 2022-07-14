@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MWG_Ecommerce.Service
 {
@@ -16,6 +17,10 @@ namespace MWG_Ecommerce.Service
         public ProductService(ShoppingonlineContext context)
         {
             _context = context;
+        }
+
+        public ProductService()
+        {
         }
 
         public ProductPagingDTO GetProducts(int currentPage)
@@ -76,6 +81,65 @@ namespace MWG_Ecommerce.Service
             {
                 return false;
             }
+        }
+
+        public int CountProductOfCategory_1()
+        {
+            int list = _context.Products
+                .Include(o => o.Category)
+                .Where(o => o.CategoryId == 1)
+                .Count();
+            return list;
+        }
+
+        public int CountProductOfCategory_2()
+        {
+            int list = _context.Products
+                .Include(o => o.Category)
+                .Where(o => o.CategoryId == 2)
+                .Count();
+            return list;
+        }
+
+        public int CountProductOfCategory_3()
+        {
+            int list = _context.Products
+                .Include(o => o.Category)
+                .Where(o => o.CategoryId == 3)
+                .Count();
+            return list;
+        }
+
+        public int CountProductOfCategory_4()
+        {
+            int list = _context.Products
+                .Include(o => o.Category)
+                .Where(o => o.CategoryId == 4)
+                .Count();
+            return list;
+        }
+
+        public int CountProductOfCategory_5()
+        {
+            int list = _context.Products
+                .Include(o => o.Category)
+                .Where(o => o.CategoryId == 5)
+                .Count();
+            return list;
+        }
+
+        public int CountProductOfCategory_6()
+        {
+            int list = _context.Products
+                .Include(o => o.Category)
+                .Where(o => o.CategoryId == 6)
+                .Count();
+            return list;
+        }
+
+        public List<Product> GetTop10ProductView()
+        {
+            return _context.Products.OrderByDescending(o => o.Views).Take(12).ToList();
         }
     }
 }

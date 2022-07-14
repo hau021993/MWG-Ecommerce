@@ -55,13 +55,15 @@
     </tbody>
 </table>
 
- @if (Model.PageCount > 1)
+@if (Model.PageCount > 1)
     {
 
         <div class="row col-sm-10">
             <div class="col-sm-2">
                 Total Items: @Model.PageCount
             </div>
+             <div class="col-sm-10">
+          
             @if (Model.CurrentPageIndex > 1)
             {
                 <a class="page-links btn btn-outline-primary" asp-controller="SizeManager" asp-action="Index" asp-route-currentPageIndex="1">First</a>
@@ -70,7 +72,7 @@
             else
             {
                 <span class="btn btn-outline-primary active">First</span>
-            }&nbsp; &nbsp;
+            }
 
             @for (int i = 1; i <= Model.PageCount; i++)
             {
@@ -95,7 +97,7 @@
             {
                 <span class="btn btn-outline-primary active">Next </span>
 
-            }&nbsp; &nbsp;
+            }
 
             @if (Model.CurrentPageIndex < Model.PageCount)
             {
@@ -106,9 +108,9 @@
             {
                 <span class="btn btn-outline-primary active">Last</span>
 
-            }&nbsp; &nbsp;
-
+            } &nbsp;
         </div>
+    </div>
     }
 
 </div>

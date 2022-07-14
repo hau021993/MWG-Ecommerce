@@ -1,19 +1,68 @@
-﻿@model IEnumerable<MWG_Ecommerce.Models.Order>
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model IEnumerable<MWG_Ecommerce.Models.Order>
 
 @{
     ViewData["Title"] = "OrderManager";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    @if(@HttpContextAccessor.HttpContext.Session.GetString("role") == "ROLE_ADMIN")
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        @section CategoryList
+        {   
+           <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
+               <div class="navbar-nav w-100 overflow-hidden" style="height: 310px">      
+                    @foreach(var item in ViewBag.CategoryList)
+                    {
+                        <a href="" class="nav-item nav-link">@item.CategoryName</a>
+                    }                                 
+               </div>
+           </nav>
+        }
+
+        @section SupplierList
+        {  
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Thương hiệu</a>
+                    <div class="dropdown-menu rounded-0 m-0">
+                    @foreach(var item in ViewBag.SupplierList)
+                    {
+                        <a href="#" class="dropdown-item">@item.CompanyName</a>
+                    }            
+                    </div>
+            </div>  
+        }
+    }
 }
 
 <h1 style="text-align:center">Quản lí đơn hàng</h1>
 
-<p>
-    <a class="btn btn-primary text-white" asp-controller="OrderManager" asp-action="Index"> <i class="fas fa-arrows"></i> Tất cả đơn hàng</a>
-    <a class="btn btn-info text-white" asp-controller="OrderManager" asp-action="ShowOrderType_1"> <i class="fa-solid fa-table-list"></i> Đang xử lí</a>
-    <a class="btn btn-warning" asp-controller="OrderManager" asp-action="ShowOrderType_2"> <i class="fa-solid fa-table-list"></></i> Đang giao hàng</a>
-    <a class="btn btn-success text-white" asp-controller="OrderManager" asp-action="ShowOrderType_3"> <i class="fa-solid fa-table-list"></i> Đã giao hàng</a>
-    <a class="btn btn-dark" asp-controller="OrderManager" asp-action="ShowOrderType_4"> <i class="fa-solid fa-table-list"></></i> Đã hủy</a>
-</p>
+@if(@HttpContextAccessor.HttpContext.Session.GetString("role") == "ROLE_ADMIN")
+{
+    <p>
+        <a class="btn btn-primary text-white" asp-controller="OrderManager" asp-action="Index"> <i class="fas fa-arrows"></i> Tất cả đơn hàng</a>
+        <a class="btn btn-info text-white" asp-controller="OrderManager" asp-action="ShowOrderType_1"> <i class="fa-solid fa-table-list"></i> Đang xử lí</a>
+        <a class="btn btn-warning" asp-controller="OrderManager" asp-action="ShowOrderType_2"> <i class="fa-solid fa-table-list"></i> Đang giao hàng</a>
+        <a class="btn btn-success text-white" asp-controller="OrderManager" asp-action="ShowOrderType_3"> <i class="fa-solid fa-table-list"></i> Đã giao hàng</a>
+        <a class="btn btn-dark" asp-controller="OrderManager" asp-action="ShowOrderType_4"> <i class="fa-solid fa-table-list"></i> Đã hủy</a>
+    </p>
+
+
+}
+else
+{
+    <p>
+        <a class="btn btn-primary text-white" asp-controller="OrderManager" asp-action="ShowAllOrderForUser" asp-route-id="id"> <i class="fas fa-arrows"></i> Tất cả đơn hàng</a>
+        <a class="btn btn-info text-white" name="type_1" asp-controller="OrderManager" asp-action="ShowOrderForUserType_1" asp-route-id="id"> <i class="fa-solid fa-table-list"></i> Đang xử lí</a>
+        <a class="btn btn-warning" asp-controller="OrderManager" asp-action="ShowOrderForUserType_2" asp-route-id="id"> <i class="fa-solid fa-table-list"></i> Đang giao hàng</a>
+        <a class="btn btn-success text-white" asp-controller="OrderManager" asp-action="ShowOrderForUserType_3" asp-route-id="id"> <i class="fa-solid fa-table-list"></i> Đã giao hàng</a>
+        <a class="btn btn-dark" asp-controller="OrderManager" asp-action="ShowOrderForUserType_4" asp-route-id="id"> <i class="fa-solid fa-table-list"></i> Đã hủy</a>
+    </p>
+}
 
 
 <!-- TABLE VIEW --> 
@@ -59,19 +108,35 @@
                     @String.Format("{0:dd/MM/yyyy}", item.ShipDate)
                 </td>  
                 <td class="align-middle text-center">
-                    <button type="button" class="btn btn-info text-white" 
+                        @if (@HttpContextAccessor.HttpContext.Session.GetString("role") == "ROLE_ADMIN")
+                        {
+                            <button type="button" class="btn btn-info text-white" 
                             onclick="showInPopup('@Url.Action("EditOrder","OrderManager",new { id= item.OrderId },Context.Request.Scheme)','Sửa trạng thái đơn hàng')">
-                        <i class="fas fa-pencil-alt"></i>
-                    </button>
-                    <a type="button" class="btn btn-info text-white" asp-controller="OrderManager" asp-action="ShowOrderDetail" asp-route-id="@item.OrderId">                           
-                        <i class="fas fa-list"></i>
-                    </a>                             
-                    <form asp-action="Delete" asp-route-id="@item.OrderId" onsubmit="return ajaxDelete(this);" class="d-inline">
-                    <button type="submit" class="btn btn-danger">
-                        <i style="color:black;" class="far fa-trash-alt"></i>
-                    </button>
-                    </form>
-                </td>
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <a type="button" class="btn btn-info text-white" asp-controller="OrderManager" asp-action="ShowOrderDetail" asp-route-id="@item.OrderId">                           
+                                <i class="fas fa-list"></i>
+                            </a>                             
+                            <form asp-action="Delete" asp-route-id="@item.OrderId" onsubmit="return ajaxDelete(this);" class="d-inline">
+                                <button type="submit" class="btn btn-danger">
+                                    <i style="color:black;" class="far fa-trash-alt"></i>
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            @if(item.Status == "Đang xử lí")
+                            {
+                                <button type="button" class="btn btn-info text-white" 
+                                onclick="showInPopup('@Url.Action("EditOrder","OrderManager",new { id= item.OrderId },Context.Request.Scheme)','Hủy đơn hàng')">
+                                <i class="fas fa-pencil-alt"></i>
+                                </button>
+                            }                            
+                            <a type="button" class="btn btn-info text-white" asp-controller="OrderManager" asp-action="ShowOrderDetail" asp-route-id="@item.OrderId">                           
+                                <i class="fas fa-list"></i>
+                            </a>     
+                        }
+                    </td>
             </tr>
         }
     </tbody>

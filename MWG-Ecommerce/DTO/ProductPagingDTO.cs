@@ -19,5 +19,6 @@ namespace MWG_Ecommerce.DTO
         /// Gets or sets PageCount.
         ///</summary>
         public int PageCount { get; set; }
+
     }
 }

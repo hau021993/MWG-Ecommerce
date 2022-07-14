@@ -17,6 +17,7 @@ namespace MWG_Ecommerce.Models
             DiscountDetails = new HashSet<DiscountDetail>();
             OrderDetails = new HashSet<OrderDetail>();
             SizeDetails = new HashSet<SizeDetail>();
+
         }
 
         [Key]

@@ -116,15 +116,8 @@
                         <div class="navbar-nav mr-auto py-0">
                             <a href="#" class="nav-item nav-link">Trang chủ</a>
                             <a href="#" class="nav-item nav-link">Sản phẩm</a>
-                            <a href="#" class="nav-item nav-link">Chi tiết sản phẩm</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Thương hiệu</a>
-                                <div class="dropdown-menu rounded-0 m-0">
-                                    @RenderSection("SupplierList", required: true)
-                                    @*<a href="#" class="dropdown-item">Giỏ hàng</a>
-                                    <a href="#" class="dropdown-item">Thanh toán</a>*@
-                                </div>
-                           </div>    
+                            <a href="#" class="nav-item nav-link">Chi tiết sản phẩm</a>                          
+                            @RenderSection("SupplierList", required: true)
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tác vụ</a>
                                 <div class="dropdown-menu rounded-0 m-0">
@@ -147,7 +140,7 @@
                                         <a asp-controller="Auth" asp-action="Logout" class="dropdown-item">Đăng xuất</a>
                                         <a asp-controller="AccountManager" asp-action="MyInfoDetail" class="dropdown-item">Thông tin cá nhân</a>
                                         <a asp-controller="AccountManager" asp-action="MyAccountLoginHistory" class="dropdown-item">Lịch sử đăng nhập</a>
-                                        <a href="#" class="dropdown-item">Lịch sử mua hàng</a>
+                                        <a asp-controller="OrderManager" asp-action="ShowOrderForUserType_1" asp-route-id="id" class="dropdown-item">Lịch sử mua hàng</a>
 
                                     }                                  
                                 </div>
@@ -156,14 +149,58 @@
                         </div>
                     </div>
                 </nav>
+                <div id="header-carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" style="height: 410px;">
+                            <img class="img-fluid" src="https://a.ipricegroup.com/media/Sneaker/Bitis/Giay_Bitis_Hunter_1.jpg" alt="Card image cap">
+                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                <div class="p-3" style="max-width: 700px;">
+                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">Giảm giá 30.000 VND</h4>
+                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Bitis Hunter</h3>
+                                    <a href="" class="btn btn-light py-2 px-3">Xem ngay</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item" style="height: 410px;">
+                            <img class="img-fluid" src="https://tefoss.com/wp-content/uploads/2022/02/ht006.jpg" alt="Card image cap">
+                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                <div class="p-3" style="max-width: 700px;">
+                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">Giảm giá 50.000 VND</h4>
+                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Tefoss</h3>
+                                    <a href="" class="btn btn-light py-2 px-3">Xem ngay</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
+                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                            <span class="carousel-control-prev-icon mb-n2"></span>
+                        </div>
+                    </a>
+                    <a class="carousel-control-next" href="#header-carousel" data-slide="next">
+                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                            <span class="carousel-control-next-icon mb-n2"></span>
+                        </div>
+                    </a>
+                </div>
+                <br />
             </div>
         </div>
     </div>
     <!-- Navbar End -->
 
+     @RenderSection("Featured", required: false)
+
+     @RenderSection("Categories", required: false)
+
+     @RenderSection("TopProductView", required: false)
+
+     @RenderSection("SupplierListVendor", required: false)
+
 
     <!-- Page Header Start -->
-    <div class="container-fluid bg-secondary mb-5">
+    @*<div class="container-fluid bg-secondary mb-5">*@
+    <div class="container-fluid mb-5">
         <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

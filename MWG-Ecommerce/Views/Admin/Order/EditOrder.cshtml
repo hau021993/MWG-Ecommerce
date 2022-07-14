@@ -1,4 +1,6 @@
-﻿@model MWG_Ecommerce.Models.Order
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model MWG_Ecommerce.Models.Order
 @{
     ViewData["Title"] = "EditOrder";
     Layout = null;
@@ -11,19 +13,28 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="OrderId" />
             <input type="hidden" asp-for="UserId" />
-            <input type="hidden" asp-for="PaymentId" />
+            <input type="hidden" asp-for="PaymentId" /> 
             <input type="hidden" asp-for="OrderDate" />
             <input type="hidden" asp-for="ShipDate" />
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
+            <div class="row"> 
+                <div class="col-md-12"> 
+                    <div class="form-group"> 
                         <label asp-for="Status" class="control-label">Trạng thái đơn hàng</label>
-                        <select asp-for="Status" class ="form-control">
-                            <option value="Đang xử lí">Đang xử lí</option>
-                            <option value="Đang giao hàng">Đang giao hàng</option>
-                            <option value="Đã giao hàng">Đã giao hàng</option>
-                            <option value="Đã hủy">Đã hủy</option>
-                        </select>
+                         @if(@HttpContextAccessor.HttpContext.Session.GetString("role") == "ROLE_ADMIN")
+                         {
+                            <select asp-for="Status" class ="form-control">
+                                <option value="Đang xử lí">Đang xử lí</option>
+                                <option value="Đang giao hàng">Đang giao hàng</option>
+                                <option value="Đã giao hàng">Đã giao hàng</option>
+                                <option value="Đã hủy">Đã hủy</option>
+                            </select>
+                        }
+                        else
+                        {
+                            <select asp-for="Status" class ="form-control">                                          
+                                <option value="Đã hủy">Hủy</option>
+                            </select>
+                        }
                     </div>
                 </div>
             </div>
@@ -31,7 +42,7 @@
             <br />
 
             <div class="form-group">
-                <input style="margin-left:180px; background-color:lightseagreen" type="submit" value="Thực hiện" class="btn btn-primary btn-block" />
+                <input style="text-align:center; background-color:lightseagreen" type="submit" value="Thực hiện" class="btn btn-primary btn-block" />
             </div>
         </form>
     </div>

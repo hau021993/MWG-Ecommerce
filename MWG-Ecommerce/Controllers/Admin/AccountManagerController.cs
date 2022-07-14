@@ -20,6 +20,8 @@ namespace MWG_Ecommerce.Controllers.Admin
         private readonly ShoppingonlineContext _context;
         private readonly AccountService accountService;
         private readonly LoginHistoryService loginHistoryService;
+        private readonly CategoryService categoryService;
+        private readonly SupplierService supplierService;
 
         public AccountManagerController(ILogger<AccountManagerController> logger, ShoppingonlineContext context)
         {
@@ -27,6 +29,8 @@ namespace MWG_Ecommerce.Controllers.Admin
             _context = context;
             accountService = new AccountService(context);
             loginHistoryService = new LoginHistoryService(context);
+            categoryService = new CategoryService(context);
+            supplierService = new SupplierService(context);
         }
 
         public IActionResult Index()
@@ -129,8 +133,8 @@ namespace MWG_Ecommerce.Controllers.Admin
 
         public IActionResult MyAccountLoginHistory(int idSession)
         {
-            ViewData["CategoryList"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
-            ViewData["SupplierList"] = new SelectList(_context.Suppliers, "SupplierId", "CompanyName");
+            ViewData["CategoryList"] = categoryService.GetAllCategories();
+            ViewData["SupplierList"] = supplierService.GetAllSupplier();
             idSession = (int)HttpContext.Session.GetInt32("id");
             var account = accountService.FindUserById(idSession);
             loginHistoryService.GetAllLoginHistoryByIdUser(idSession);
@@ -155,8 +159,8 @@ namespace MWG_Ecommerce.Controllers.Admin
 
         public ActionResult MyInfoDetail(int idSession)
         {
-            ViewData["CategoryList"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
-            ViewData["SupplierList"] = new SelectList(_context.Suppliers, "SupplierId", "CompanyName");
+            ViewData["CategoryList"] = categoryService.GetAllCategories();
+            ViewData["SupplierList"] = supplierService.GetAllSupplier();
             idSession = (int)HttpContext.Session.GetInt32("id");
             var account = accountService.FindUserById(idSession);
             if (account == null)
