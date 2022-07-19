@@ -31,7 +31,7 @@ namespace MWG_Ecommerce.Models
         public string Passwword { get; set; }
         [StringLength(50)]
         public string Sex { get; set; }
-        [StringLength(50)]
+        [StringLength(255)]
         public string Address { get; set; }
         [StringLength(20)]
         public string Email { get; set; }

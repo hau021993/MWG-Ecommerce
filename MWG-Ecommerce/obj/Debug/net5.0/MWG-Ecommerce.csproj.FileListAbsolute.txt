@@ -479,3 +479,7 @@ D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\View
 D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Admin\Report\DetailProduct.cshtml.g.cs
 D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Shared\_PagingXTL.cshtml.g.cs
 D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Shared\_OldLayout.cshtml.g.cs
+D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Home\ProductPage.cshtml.g.cs
+D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Home\ProductDetail.cshtml.g.cs
+D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Cart\Index.cshtml.g.cs
+D:\ItFresher\TestProject\MWG-Ecommerce\MWG-Ecommerce\obj\Debug\net5.0\Razor\Views\Cart\Checkout.cshtml.g.cs

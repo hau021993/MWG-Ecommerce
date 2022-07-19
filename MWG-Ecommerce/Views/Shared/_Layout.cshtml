@@ -84,9 +84,19 @@
                     <i class="fas fa-heart text-primary"></i>
                     <span class="badge">0</span>
                 </a>*@
-                <a href="#" class="btn border">
+                <a asp-controller="Cart" asp-action="Index" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span class="badge" id="cart_count">
+                        @using MWG_Ecommerce.Helpers
+                        @{
+                             var data = Context.Session.Get<List<CartItem>>("GioHang");
+                             if (data == null)
+                             {
+                                 data = new List<CartItem>();
+                             }
+                         }
+                             @(data.Sum(c => c.Quanlity))
+                    </span>
                 </a>
             </div>
         </div>
@@ -114,14 +124,14 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="#" class="nav-item nav-link">Trang chủ</a>
-                            <a href="#" class="nav-item nav-link">Sản phẩm</a>
-                            <a href="#" class="nav-item nav-link">Chi tiết sản phẩm</a>                          
+                            <a asp-controller="Home" asp-action="Index" class="nav-item nav-link">Trang chủ</a>
+                            <a asp-controller="Home" asp-action="ShowProduct" class="nav-item nav-link">Sản phẩm</a>
+                            <a asp-controller="Home" asp-action="ProductDetail" asp-route-idpro="3" asp-route-idsi="10" asp-route-idco="1" asp-route-idca="1" class="nav-item nav-link">Chi tiết sản phẩm</a>                          
                             @RenderSection("SupplierList", required: true)
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tác vụ</a>
                                 <div class="dropdown-menu rounded-0 m-0">
-                                    <a href="#" class="dropdown-item">Giỏ hàng</a>
+                                    <a asp-controller="Cart" asp-action="Index" class="dropdown-item">Giỏ hàng</a>
                                     <a href="#" class="dropdown-item">Thanh toán</a>
                                 </div>
                             </div>                            
@@ -149,40 +159,7 @@
                         </div>
                     </div>
                 </nav>
-                <div id="header-carousel" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active" style="height: 410px;">
-                            <img class="img-fluid" src="https://a.ipricegroup.com/media/Sneaker/Bitis/Giay_Bitis_Hunter_1.jpg" alt="Card image cap">
-                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                                <div class="p-3" style="max-width: 700px;">
-                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">Giảm giá 30.000 VND</h4>
-                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Bitis Hunter</h3>
-                                    <a href="" class="btn btn-light py-2 px-3">Xem ngay</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item" style="height: 410px;">
-                            <img class="img-fluid" src="https://tefoss.com/wp-content/uploads/2022/02/ht006.jpg" alt="Card image cap">
-                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                                <div class="p-3" style="max-width: 700px;">
-                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">Giảm giá 50.000 VND</h4>
-                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Tefoss</h3>
-                                    <a href="" class="btn btn-light py-2 px-3">Xem ngay</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
-                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                            <span class="carousel-control-prev-icon mb-n2"></span>
-                        </div>
-                    </a>
-                    <a class="carousel-control-next" href="#header-carousel" data-slide="next">
-                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                            <span class="carousel-control-next-icon mb-n2"></span>
-                        </div>
-                    </a>
-                </div>
+                @RenderSection("Banner", required: false)  
                 <br />
             </div>
         </div>
@@ -198,15 +175,20 @@
      @RenderSection("SupplierListVendor", required: false)
 
 
-    <!-- Page Header Start -->
-    @*<div class="container-fluid bg-secondary mb-5">*@
-    <div class="container-fluid mb-5">
+    <!-- Page Header Start -->   
+    @if((string)ViewData["Title"] == "MyInfoDetail" || (string)ViewData["Title"] == "MyAccountLoginHistory" 
+        || (string)ViewData["Title"] == "OrderManager" || (string)ViewData["Title"] == "ShowOrderDetail")
+    {
         <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-    </div>
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    }
+    else
+    {
+        @RenderBody()
+    }
     <!-- Page Header End -->
 
 
@@ -250,10 +232,10 @@
                     <div class="col-md-6 mb-5">
                         <h5 class="font-weight-bold text-dark mb-4">Thao tác nhanh</h5>
                         <div class="d-flex flex-column justify-content-start">
-                            <a class="text-dark mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Trang chủ</a>
-                            <a class="text-dark mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Sản phẩm</a>
+                            <a asp-controller="Home" asp-action="Index" class="text-dark mb-2"><i class="fa fa-angle-right mr-2"></i>Trang chủ</a>
+                            <a asp-controller="Home" asp-action="ShowProduct" class="text-dark mb-2"><i class="fa fa-angle-right mr-2"></i>Sản phẩm</a>
                             <a class="text-dark mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Chi tiết sản phẩm</a>
-                            <a class="text-dark mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Giỏ hàng</a>
+                            <a class="text-dark mb-2" asp-controller="Cart" asp-action="Index"><i class="fa fa-angle-right mr-2"></i>Giỏ hàng</a>
                             <a class="text-dark mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Thanh toán</a>                   
                         </div>
                     </div>
@@ -306,6 +288,9 @@
 
     <script src="~/js/Admin/productAjaxHandler.js" asp-append-version="true"></script>
     <script src="~/js/Admin/generalAjaxHandler.js" asp-append-version="true"></script>
+    @RenderSection("scripts", required: false)
+    @RenderSection("scripts_2", required: false)
+    @RenderSection("scripts_3", required: false)
 </body>
 
 </html>

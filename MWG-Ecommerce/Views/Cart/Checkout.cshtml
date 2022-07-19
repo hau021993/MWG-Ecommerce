@@ -1,0 +1,175 @@
+﻿@model IEnumerable<CartItem>
+
+@{
+    ViewData["Title"] = "CartPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section CategoryList
+{   
+   <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
+       <div class="navbar-nav w-100 overflow-hidden" style="height: 310px">      
+            @foreach(var item in ViewBag.CategoryList)
+            {
+                <a href="" class="nav-item nav-link">@item.CategoryName</a>
+            }                                 
+       </div>
+   </nav>
+}
+
+@section SupplierList
+{  
+    <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Thương hiệu</a>
+            <div class="dropdown-menu rounded-0 m-0">
+            @foreach(var item in ViewBag.SupplierList)
+            {
+                <a href="#" class="dropdown-item">@item.CompanyName</a>
+            }            
+            </div>
+    </div>  
+}
+ 
+<!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">Thanh toán</h1>           
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+
+    <!-- Checkout Start -->
+    <div class="container-fluid pt-5">
+        <div class="row px-xl-5">
+            <div class="col-lg-8">
+                <div class="mb-4">
+                    <h4 class="font-weight-semi-bold mb-4">Thông tin đơn hàng</h4>
+                    <div class="row">
+                        @{
+                            var user = Context.Session.Get("user");
+                            
+                            <div class="col-md-6 form-group">
+                                <label>Tên người đặt hàng</label>
+                                <input readonly class="form-control" type="text" value="@Context.Session.GetString("name")" placeholder="">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Tài khoản</label>
+                                <input readonly class="form-control" value="@Context.Session.GetString("username")" type="text" placeholder="">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Email</label>
+                                <input readonly class="form-control" value="@Context.Session.GetString("email")" type="email" placeholder="">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Địa chỉ</label>
+                                <textarea readonly class="form-control" type="text" placeholder=""></textarea>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Số điện thoại</label>
+                                <input readonly class="form-control" value="@Context.Session.GetString("phone")" type="tel" placeholder="">
+                            </div>                     
+                            <div class="col-md-6 form-group">
+                                <label>Ngày giao hàng</label>
+                                <input class="form-control" type="datetime" placeholder="">
+                            </div>
+                        }
+                       @* <div class="col-md-12 form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="newaccount">
+                                <label class="custom-control-label" for="newaccount">Tạo tài khoản nếu chưa có</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="shipto">
+                                <label class="custom-control-label" for="shipto"  data-toggle="collapse" data-target="#shipping-address">Ship to different address</label>
+                            </div>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card border-secondary mb-5">
+                    <div class="card-header bg-secondary border-0">
+                        <h4 class="font-weight-semi-bold m-0">Thanh toán đơn hàng</h4>
+                    </div>
+                    <div class="card-body">
+                       <h5 class="font-weight-medium mb-3">Sản phẩm</h5>
+                       @using MWG_Ecommerce.Helpers                     
+                       @foreach (var item in Context.Session.Get<List<CartItem>>("GioHang"))
+                       {                            
+                            <div class="d-flex justify-content-between">
+                                <p>@item.ProductName</p>
+                                <p>@String.Format("{0:0,0}", @item.TotalPrice) </p>
+                            </div>         
+                       }
+                                      
+                       @* <hr class="mt-0">
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Subtotal</h6>
+                            <h6 class="font-weight-medium">$150</h6>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <h6 class="font-weight-medium">Shipping</h6>
+                            <h6 class="font-weight-medium">$10</h6>
+                        </div>*@
+                    </div>
+                    <div class="card-footer border-secondary bg-transparent">
+                        <div class="d-flex justify-content-between mt-2">
+                            <h5 class="font-weight-bold">Tổng giá trị</h5>
+                            <h5 class="font-weight-bold">                             
+                                @{
+                                     var data = Context.Session.Get<List<CartItem>>("GioHang");
+                                     if (data == null)
+                                     {
+                                         data = new List<CartItem>();
+                                     }
+                                 }
+                                     @String.Format("{0:0,0}", data.Sum(c => c.TotalPrice)) VND
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-secondary mb-5">
+                    <div class="card-header bg-secondary border-0">
+                        <h4 class="font-weight-semi-bold m-0">Phương thức thanh toán</h4>
+                    </div>
+                    <div class="card-body">
+                    @foreach (var item in ViewBag.PaymentList)
+                    {
+                        <div class="form-group">
+                            <div class="custom-control custom-radio">
+                                <input required type="radio" class="custom-control-input" name="payment" id="@item.PaymentId">
+                                <label class="custom-control-label" for="@item.PaymentId">@item.PaymentType</label>
+                            </div>
+                        </div>
+                    }                                               
+                    </div>
+                    <div class="card-footer border-secondary bg-transparent">
+                    @using Microsoft.AspNetCore.Http
+                    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+                    @if(Context.Session.GetInt32("id") == null)
+                    {
+                        <input type="button" id="btn" value="Đặt hàng" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" />
+                        
+                    }
+                    else
+                    {
+                         <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Đặt hàng</button>
+                    }
+                   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Checkout End -->
+
+<script language="javascript">
+    var button = document.getElementById("btn");
+    button.onclick = function(){
+         alert("Bạn cần đăng nhập để tiến hành thanh toán!");
+    }
+</script>
+

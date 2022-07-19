@@ -1,0 +1,222 @@
+﻿@model IEnumerable<CartItem>
+
+@{
+    ViewData["Title"] = "CartPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section CategoryList
+{   
+   <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
+       <div class="navbar-nav w-100 overflow-hidden" style="height: 310px">      
+            @foreach(var item in ViewBag.CategoryList)
+            {
+                <a href="" class="nav-item nav-link">@item.CategoryName</a>
+            }                                 
+       </div>
+   </nav>
+}
+
+@section SupplierList
+{  
+    <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Thương hiệu</a>
+            <div class="dropdown-menu rounded-0 m-0">
+            @foreach(var item in ViewBag.SupplierList)
+            {
+                <a href="#" class="dropdown-item">@item.CompanyName</a>
+            }            
+            </div>
+    </div>  
+}
+
+<!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">Giỏ hàng</h1>
+            <div class="d-inline-flex">               
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+    <!-- Cart Start -->
+    <div class="container-fluid pt-5">
+        <div class="row px-xl-5">
+            <div class="col-lg-12 table-responsive mb-5">
+                <p>
+                    <a class="btn btn-success btn btn-success text-white" onclick="goBack()"> <i class="fa fa-reply"></i> Quay trở lại</a>
+                    <a class="btn btn-primary btn btn-primary text-white" asp-controller="Cart" asp-action="Checkout"> <i class="fa fa-money-bill"></i> Thanh toán</a>
+                    <a class="btn btn-info btn btn-success text-white">Tổng giá trị đơn hàng:
+                        @using MWG_Ecommerce.Helpers
+                        @{
+                             var data = Context.Session.Get<List<CartItem>>("GioHang");
+                             if (data == null)
+                             {
+                                 data = new List<CartItem>();
+                             }
+                         }
+                             @String.Format("{0:0,0}", data.Sum(c => c.TotalPrice)) VND</a>
+                </p>
+                <table class="table table-bordered text-center mb-0">
+                    <thead class="bg-secondary text-dark">
+                        <tr>
+                            <th style=" width:25%">Sản phẩm</th>
+                            <th style=" width:15%">Giá tiền</th>
+                            <th style=" width:5%">Số lượng</th>
+                            <th style=" width:15%">Tổng tiển</th>
+                            <th style=" width:10%">Hoạt động</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle">
+                        @foreach (var item in Model)
+                       {
+                            <tr>
+                                <td class="align-middle"><img src="@item.Picture" alt="" style="width: 50px;"> @item.ProductName</td>
+                                <td class="align-middle">@String.Format("{0:0,0}", item.Price) VND</td>
+                                <td class="align-middle">
+                                <form asp-action="UpdateCart" asp-controller="Cart" asp-route-id="@item.ProductId">
+                                    <div class="d-flex align-items-center">
+                                        <div class="input-group quantity auto" style="width: 100px;">
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-sm btn-primary btn-minus" >
+                                                    &minus;
+                                                </button>
+                                            </div>
+                                            <input name="Quanlity" type="text" class="form-control form-control-sm bg-secondary text-center" value="@item.Quanlity">
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-sm btn-primary btn-plus">
+                                                    &plus;
+                                                </button>
+                                            </div>                                        
+                                        </div>
+                                       @* <button type="submit" data-id="@item.ProductId" class="ajax-update-cart btn btn-sm btn-primary"><i class="fa fa-edit"></i></button>*@
+                                    </div>
+                                </form>
+                                </td>
+                                <td class="align-middle">@String.Format("{0:0,0}", item.TotalPrice) VND</td>
+                                <td class="align-middle">                                        
+                                    <button type="submit" data-id="@item.ProductId" class="ajax-delete-cart btn btn-sm btn-primary"><i class="fa fa-times"></i></button>
+                                </td>
+                            </tr>
+                       }                                               
+                    </tbody>
+                </table>
+            </div>
+           @* <div class="col-lg-4">
+                <form class="mb-5" action="">
+                    @*<div class="input-group">
+                        <input type="text" class="form-control p-4" placeholder="Coupon Code">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary">Apply Coupon</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="card border-secondary mb-5">
+                    <div class="card-header bg-secondary border-0">
+                        <h4 class="font-weight-semi-bold m-0">Đơn hàng</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Tổng tiền sản phẩm</h6>
+                            <h6 class="font-weight-medium">$150</h6>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <h6 class="font-weight-medium">Phí giao hàng</h6>
+                            <h6 class="font-weight-medium">Miễn phí</h6>
+                        </div>
+                    </div>
+                    <div class="card-footer border-secondary bg-transparent">
+                        <div class="d-flex justify-content-between mt-2">
+                            <h5 class="font-weight-bold">Tổng giá trị đơn hàng</h5>
+                            <h5 class="font-weight-bold">$160</h5>
+                        </div>
+                        <button class="btn btn-block btn-primary my-3 py-3">Đặt hàng</button>
+                    </div>
+                </div>
+            </div>*@
+        </div>
+    </div>
+    <!-- Cart End -->
+
+ <script>
+      function goBack(){
+          window.history.back();
+      }
+  </script>
+
+@section scripts_2{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".ajax-update-cart").click(function () {
+                $.ajax({
+                    url: "/Cart/UpdateCart",
+                    data: {
+                        id: $(this).data("id"),                     
+                    },
+                    success: function (data) {                    
+                        Swal.fire({
+                            icon: 'success', 
+                            title: 'Cập nhật thành công!',
+                            showConfirmButton: false,
+                            timer: 1500
+                           
+                        });                       
+                        $("#cart_count").html(data.quanlity);
+                        //window.location.reload(1500);
+                        setTimeout("location.reload(true)",1500);
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Cập nhật thất bại!',
+                            text: 'Vui lòng thử lại',
+                            showConfirmButton: false,
+                            timer: 1500                           
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+@section scripts_3{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".ajax-delete-cart").click(function () {
+                $.ajax({
+                    url: "/Cart/RemoveCart",
+                    data: {
+                        id: $(this).data("id"),                     
+                    },
+                    success: function (data) {                    
+                        Swal.fire({
+                            icon: 'success', 
+                            title: 'Xóa thành công!',
+                            showConfirmButton: false,
+                            timer: 1500
+                           
+                        });                       
+                        $("#cart_count").html(data.quanlity);
+                        //window.location.reload(1500);
+                        setTimeout("location.reload(true)",1500);
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Xóa thất bại!',
+                            text: 'Vui lòng thử lại',
+                            showConfirmButton: false,
+                            timer: 1500                           
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -21,6 +21,9 @@ namespace MWG_Ecommerce.Controllers
         private readonly ProductService productService;
         private readonly CategoryService categoryService;
         private readonly SupplierService supplierService;
+        private readonly ColorService colorService;
+        private readonly SizeService sizeService;
+
 
         public HomeController(ILogger<HomeController> logger, ShoppingonlineContext context)
         {
@@ -30,6 +33,8 @@ namespace MWG_Ecommerce.Controllers
             productService = new ProductService(context);
             categoryService = new CategoryService(context);
             supplierService = new SupplierService(context);
+            colorService = new ColorService(context);
+            sizeService = new SizeService(context);
         }
 
         public IActionResult Index()
@@ -44,8 +49,78 @@ namespace MWG_Ecommerce.Controllers
             ViewData["CountProduct_6"] = productService.CountProductOfCategory_6();
                  
             //HttpContext.Session.SetInt32("id", 2);
-            return View(productService.GetTop10ProductView());
+            return View("/Views/Home/Index.cshtml", productService.GetTop12ProductView());
         }
+
+        public IActionResult ShowProduct()
+        {
+            ViewData["CategoryList"] = categoryService.GetAllCategories();
+            ViewData["SupplierList"] = supplierService.GetAllSupplier();
+            ViewData["ColorList"] = colorService.GetAllColor();
+            ViewData["SizeList"] = sizeService.GetAllSize();            
+
+            return View("/Views/Home/ProductPage.cshtml", productService.GetAllProduct());
+        }
+
+        public IActionResult ShowProductSortView()
+        {
+            ViewData["CategoryList"] = categoryService.GetAllCategories();
+            ViewData["SupplierList"] = supplierService.GetAllSupplier();
+            ViewData["ColorList"] = colorService.GetAllColor();
+            ViewData["SizeList"] = sizeService.GetAllSize();
+
+            return View("/Views/Home/ProductPage.cshtml", productService.SortProductView());
+        }
+
+        public IActionResult ShowProductSortAscendingPrice()
+        {
+            ViewData["CategoryList"] = categoryService.GetAllCategories();
+            ViewData["SupplierList"] = supplierService.GetAllSupplier();
+            ViewData["ColorList"] = colorService.GetAllColor();
+            ViewData["SizeList"] = sizeService.GetAllSize();
+
+            return View("/Views/Home/ProductPage.cshtml", productService.SortProductsInAscendingPrice());
+        }
+
+        public IActionResult ShowProductSortDescendingPrice()
+        {
+            ViewData["CategoryList"] = categoryService.GetAllCategories();
+            ViewData["SupplierList"] = supplierService.GetAllSupplier();
+            ViewData["ColorList"] = colorService.GetAllColor();
+            ViewData["SizeList"] = sizeService.GetAllSize();
+
+            return View("/Views/Home/ProductPage.cshtml", productService.SortProductsInDescendingPrice());
+        }
+
+        public IActionResult ShowProductUnderPrice100000()
+        {
+            ViewData["CategoryList"] = categoryService.GetAllCategories();
+            ViewData["SupplierList"] = supplierService.GetAllSupplier();
+            ViewData["ColorList"] = colorService.GetAllColor();
+            ViewData["SizeList"] = sizeService.GetAllSize();
+
+            return View("/Views/Home/ProductPage.cshtml", productService.SearchProductUnderPrice100000());
+        }
+
+        public IActionResult ProductDetail(int idpro, int idsi, int idco, int idca)
+        {
+            ViewData["CategoryList"] = categoryService.GetAllCategories();
+            ViewData["SupplierList"] = supplierService.GetAllSupplier();
+            ViewData["ProductCategory"] = productService.FindProductById(idpro).Category.CategoryName;
+            ViewData["ProductSupplier"] = productService.FindProductById(idpro).Supplier.CompanyName;
+            ViewData["ProductSize"] = sizeService.FindSizeById(idsi).Size1;
+            ViewData["ProductColor"] = colorService.FindColorById(idco).Color1;
+            ViewData["ProductListSameCategory"] = productService.GetAllProductSameCategory(idca); 
+            var product = productService.FindProductById(idpro);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            product.Views += 1;
+            _context.SaveChanges();
+            return View("/Views/Home/ProductDetail.cshtml", product);
+        }
+
 
         public IActionResult Privacy()
         {

@@ -49,6 +49,11 @@ namespace MWG_Ecommerce.Service
             return _context.Products.ToList();
         }
 
+        public List<Product> GetAllProductSameCategory(int idca)
+        {
+            return _context.Products.Where(o => o.CategoryId == idca).ToList();
+        }
+
         public Product FindProductById(int idProduct)
         {
             return _context.Products.Find(idProduct);
@@ -137,9 +142,32 @@ namespace MWG_Ecommerce.Service
             return list;
         }
 
-        public List<Product> GetTop10ProductView()
+        public List<Product> GetTop12ProductView()
         {
             return _context.Products.OrderByDescending(o => o.Views).Take(12).ToList();
         }
+
+        public List<Product> SortProductsInAscendingPrice()
+        {
+            return _context.Products.OrderBy(o => o.Price).ToList();
+        }
+
+        public List<Product> SortProductsInDescendingPrice()
+        {
+            return _context.Products.OrderByDescending(o => o.Price).ToList();
+        }
+
+        public List<Product> SortProductView()
+        {
+            return _context.Products.OrderByDescending(o => o.Views).ToList();
+        }
+
+        public List<Product> SearchProductUnderPrice100000()
+        {
+            return _context.Products.Where(o => o.Price < 100000).ToList();
+        }
+
+
+
     }
 }

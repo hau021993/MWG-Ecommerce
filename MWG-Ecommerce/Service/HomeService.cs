@@ -19,15 +19,6 @@ namespace MWG_Ecommerce.Service
             _context = context;
         }
 
-        //public async Task<bool> GetCategoryList()
-        //{
-        //    var list = new SelectList(_context.Categories, "CategoryId", "CategoryName");
-        //    return true;
-        //}
 
-        //public void GetSupplierList()
-        //{
-        //    var list = new SelectList(_context.Suppliers, "SupplierId", "CompanyName");
-        //}
     }
 }

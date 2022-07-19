@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MWG_Ecommerce.Libraries;
 
 namespace MWG_Ecommerce.Service
 {
@@ -38,8 +39,15 @@ namespace MWG_Ecommerce.Service
             return _context.Users.Find(idUser);
         }
 
-        public async Task<bool> AddUser(User user)
+        public User FindUserByUserName(string username)
         {
+            return _context.Users.Where(u => u.Username == username).FirstOrDefault();
+        }
+
+        public async Task<bool> AddUser(User user)
+
+        {
+            user.Passwword = new HashPassword().EncryptString(user.Passwword);
             _context.Add(user);
             await _context.SaveChangesAsync();
             return true;
