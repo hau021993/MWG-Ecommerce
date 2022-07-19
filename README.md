@@ -1,4 +1,4 @@
-# :lab_coat: :jeans: Hệ thống website thương mại điện tử bán quần áo
+# :lab_coat: :jeans: Hệ thống website thương mại điện tử 
 ## :computer: Các công nghệ, kĩ thuật áp dụng:
 - Web server: Asp.Net MVC (.Net Core 5.0), Razor engine
 - Hệ quản trị CSDL: MS SQL server
